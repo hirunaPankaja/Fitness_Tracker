@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.gym_workout">
+
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:node="replace" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:node="replace" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+
+        android:label="@string/app_name"
+
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GYM_Workout"
+        tools:replace="android:allowBackup, android:label"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".app_header"
+            android:exported="false" />
+        <activity
+            android:name=".LoadingScreen"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.VerifyEmail"
+            android:exported="false" />
+        <activity
+            android:name=".SetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.OTP_verification"
+            android:exported="false" />
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Map1"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBnkS5Kf6vMX4myZ1Qs6OqUHFFBGC9tsG0" />
+
+        <activity
+            android:name=".User_Profile"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step2"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step3"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step4"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step10"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step6"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step8"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step9"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step5"
+            android:exported="false" />
+        <activity
+            android:name=".registrationSteps.Step7"
+            android:exported="false" />
+
+        <activity
+            android:name=".Workout"
+            android:exported="true" />
+
+        <activity
+            android:name=".LowerBodyWorkoutActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".ActivityRecognitionReceiver"
+            android:exported="false" />
+    </application>
+
+</manifest>

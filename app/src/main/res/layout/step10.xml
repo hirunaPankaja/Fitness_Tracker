@@ -1,0 +1,199 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_primary"
+    android:gravity="center_horizontal">
+
+    <!-- Step Indicator -->
+    <TextView
+        android:id="@+id/stepIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="STEP 2 of 24"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+
+    <!-- Progress Bar -->
+    <View
+        android:id="@+id/progressBar"
+        android:layout_width="84.44dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="8dp"
+        android:background="#3B82F6" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bio Data"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/white" />
+
+    <!-- Name Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- First Name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvFirstNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="First Name"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical" />
+
+            <EditText
+                android:id="@+id/etFirstName"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/et_background"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <!-- Last Name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tvLastNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Name"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical" />
+
+            <EditText
+                android:id="@+id/etLastName"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/et_background"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Age Selector Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp"
+        android:paddingTop="16dp">
+
+        <!-- Year -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvYearLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Year"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinnerYear"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_background"
+                android:padding="8dp"
+                android:popupBackground="@color/popup_spinner" />
+        </LinearLayout>
+
+        <!-- Month -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/tvMonthLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Month"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinnerMonth"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_background"
+                android:padding="8dp"
+                android:popupBackground="@color/popup_spinner" />
+        </LinearLayout>
+
+        <!-- Day -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/tvDayLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Day"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinnerDay"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_background"
+                android:padding="8dp"
+                android:popupBackground="@color/popup_spinner" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Result Display -->
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your age will be displayed here."
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Continue Button -->
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#1E88E5"
+        android:text="Continue"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+</LinearLayout>

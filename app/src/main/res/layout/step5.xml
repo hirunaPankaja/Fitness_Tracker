@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_primary"
+    android:padding="16dp">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Back Arrow -->
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_back_arrow"
+            android:contentDescription="Back Arrow" />
+
+        <!-- Step Indicator -->
+        <TextView
+            android:id="@+id/stepIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="STEP 11 OF 24"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+    </RelativeLayout>
+
+    <!-- Progress Bar -->
+    <View
+        android:layout_width="147dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="#3B82F6" />
+
+    <!-- Question -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="CHOOSE YOUR REASONS FOR GAINING WEIGHT"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-black" />
+
+    <!-- RadioGroup for Options -->
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <!-- Marriage or Relationship Option -->
+        <RadioButton
+            android:id="@+id/radioMarriage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:text="Marriage or a Relationship"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:background="#2E2D2D"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp" />
+
+        <!-- Busy Work or Family Life Option -->
+        <RadioButton
+            android:id="@+id/radioBusyWork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:text="Busy Work or Family Life"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:background="#2E2D2D"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp" />
+
+        <!-- Stress or Mental Health Option -->
+        <RadioButton
+            android:id="@+id/radioStress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:text="Stress or Mental Health"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:background="#2E2D2D"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp" />
+
+        <!-- Health or Hormonal Issues Option -->
+        <RadioButton
+            android:id="@+id/radioHealth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:text="Health or Hormonal Issues"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:background="#2E2D2D"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp" />
+
+        <!-- Lack of Motivation Option -->
+        <RadioButton
+            android:id="@+id/radioMotivation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:text="Lack of Motivation"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:background="#2E2D2D"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp" />
+
+        <!-- None of the Above Option -->
+        <RadioButton
+            android:id="@+id/radioNone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:text="None of the Above"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:background="#2E2D2D"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <!-- Continue Button -->
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="#3B82F6"
+        android:fontFamily="sans-serif-medium"
+        android:text="CONTINUE"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+</LinearLayout>

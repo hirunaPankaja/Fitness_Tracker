@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_primary"
+    android:padding="16dp">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Back Arrow -->
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_back_arrow"
+            android:contentDescription="Back Arrow" />
+    </RelativeLayout>
+
+    <!-- Progress Bar -->
+    <View
+        android:layout_width="336.44dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="#3B82F6" />
+
+    <!-- Question -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="WHAT IS YOUR FITNESS LEVEL?"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-black" />
+
+    <!-- RadioGroup for Options -->
+    <RadioGroup
+        android:id="@+id/fitnessLevelRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <!-- Beginner Option -->
+        <RadioButton
+            android:id="@+id/radioBeginner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#FFFFFF"
+            android:text="BEGINNER\nI'm new to fitness"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:gravity="start" />
+
+        <!-- Intermediate Option -->
+        <RadioButton
+            android:id="@+id/radioIntermediate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#FFFFFF"
+            android:text="INTERMEDIATE\nI work out 2-3 times a week"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:gravity="start" />
+
+        <!-- Advanced Option -->
+        <RadioButton
+            android:id="@+id/radioAdvanced"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#FFFFFF"
+            android:text="ADVANCED\nI exercise regularly"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:gravity="start" />
+    </RadioGroup>
+
+    <!-- Continue Button -->
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:text="CONTINUE"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3B82F6"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp" />
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#FF808080</color>
+    <color name="green">#FF4CAF50</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="darkgray">#6e6a6a</color>
+
+    <color name="popup_spinner">#454545</color>
+
+    <!-- Background Colors -->
+    <color name="background_primary">#373636</color> <!-- Dark background -->
+    <color name="background_secondary">#FF1E1E1E</color> <!-- Slightly lighter background -->
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFFFF</color> <!-- White text -->
+    <color name="text_secondary">#FFB0B0B0</color> <!-- Light gray text -->
+
+    <!-- Highlight Colors -->
+    <color name="highlight_blue">#FF2196F3</color> <!-- Bright blue for highlights -->
+    <color name="highlight_orange">#FFFF9800</color> <!-- Bright orange for accents -->
+
+    <!-- Circle Section Colors -->
+    <color name="circle_consumed">#FF8BC34A</color> <!-- Green for consumed -->
+    <color name="circle_remaining">#FFFF5722</color> <!-- Red-orange for remaining -->
+
+    <!-- Sleep and Water Section -->
+    <color name="sleep_card_background">#FF3E2723</color> <!-- Brownish background -->
+    <color name="water_card_background">#FF01579B</color> <!-- Deep blue for water -->
+
+    <!-- Navigation Colors -->
+    <color name="nav_icon">#FFFFFFFF</color> <!-- White for navigation icons -->
+
+    <color name="primaryColor">#4CAF50</color>
+    <!--  Green for buttons  -->
+    <color name="secondaryColor">#8BC34A</color>
+    <!--  Light green for accents  -->
+    <color name="backgroundColor">#F5F5F5</color>
+    <!--  Light gray for background  -->
+    <color name="textColorPrimary">#212121</color>
+    <!--  Dark gray for text  -->
+    <color name="textColorSecondary">#757575</color>
+    <!--  Light gray for secondary text  -->
+    <color name="buttonPressed">#388E3C</color>
+    <!--  Darker green for button press  -->
+    <color name="light_blue">#ADD8E6</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="cardBackgroundColor">#2A2A2A</color>
+    <color name="primaryTextColor">#FFFFFF</color>
+    <color name="secondaryTextColor">#DDDDDD</color>
+    <color name="highlightColor">#6C63Ff</color>
+    <color name="red">#FF0000</color>
+    <color name="top_header">#D3D3D3</color>
+
+</resources>

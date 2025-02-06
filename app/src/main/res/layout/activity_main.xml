@@ -1,0 +1,342 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".MainActivity">
+
+    <!-- Title and Notification Icon -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:gravity="start"
+        android:layout_marginStart="16dp"
+        android:text="Food Summary"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@id/notifyIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/notifyIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/bell"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/title"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Date Selector -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dateRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/food_progress_background"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateRecyclerView">
+
+
+        <!-- Macronutrient Section -->
+        <LinearLayout
+            android:id="@+id/mainprogress"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <!-- Calories Consumed section -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/caloriesConsumed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="1456 kcal"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/caloriesConsumedsemi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="1dp"
+                    android:text="consumed"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Circular Progress Bar in the center -->
+
+            <!-- Calories Remaining section -->
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/circularProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                app:cpb_background_progressbar_color="@color/yellow"
+                app:cpb_background_progressbar_width="8dp"
+                app:cpb_progress="70"
+                app:cpb_progress_max="100"
+                app:cpb_progressbar_color="@color/black"
+                app:cpb_progressbar_width="8dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="23dp">
+
+                <TextView
+                    android:id="@+id/caloriesRemaining"
+                    android:layout_width="101dp"
+                    android:layout_height="wrap_content"
+                    android:text="2875 kcal"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/caloriesRemainingsemi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="fill_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/mainprogress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Protein Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/protein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P - 10/12g"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+
+            <ProgressBar
+                android:id="@+id/proteinBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:progressTint="@color/yellow"
+                android:progress="80"/>
+        </LinearLayout>
+
+        <!-- Carbs Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/carbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="C - 10/12g"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+
+            <ProgressBar
+                android:id="@+id/carbsBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:progressTint="@color/yellow"
+                android:progress="80"/>
+        </LinearLayout>
+
+        <!-- Fats Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="F - 10/12g"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"/>
+
+            <ProgressBar
+                android:id="@+id/fatsBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:progressTint="@color/yellow"
+                android:progress="80"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<LinearLayout
+        android:id="@+id/sleepWaterContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first">
+
+        <!-- Sleep Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/small_plate"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/sleep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Sleep"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sleepHours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5/8 Hours"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/circularProgressBar1"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:cpb_background_progressbar_color="@color/yellow"
+                app:cpb_background_progressbar_width="5dp"
+                app:cpb_progress="70"
+                app:cpb_progress_max="100"
+                app:cpb_progressbar_color="@color/black"
+                app:cpb_progressbar_width="5dp"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Water Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/small_plate"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/water"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Water"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/waterIntake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5/8 Liters"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp" />
+            </LinearLayout>
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/circularProgressBar2"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:cpb_background_progressbar_color="@color/yellow"
+                app:cpb_background_progressbar_width="5dp"
+                app:cpb_progress="70"
+                app:cpb_progress_max="100"
+                app:cpb_progressbar_color="@color/black"
+                app:cpb_progressbar_width="5dp"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

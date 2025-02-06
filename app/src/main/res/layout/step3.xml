@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_primary"
+    android:padding="16dp">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <!-- Back Arrow -->
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow"
+            android:contentDescription="Back Arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Step Indicator -->
+        <TextView
+            android:id="@+id/stepIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STEP 3 of 24"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/backArrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Progress Bar -->
+    <View
+        android:id="@+id/progressBar"
+        android:layout_width="126.67dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="8dp"
+        android:background="#3B82F6" />
+
+    <!-- Height Selector Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="SET YOUR HEIGHT"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-black" />
+
+    <!-- Unit Selector -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Centimeters -->
+        <RadioGroup
+            android:id="@+id/unitSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Centimeters -->
+            <RadioButton
+                android:id="@+id/cmSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CM"
+                android:textColor="#FFFFFF"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="16sp" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="32dp"
+                android:layout_height="0dp" />
+
+            <!-- Feet -->
+            <RadioButton
+                android:id="@+id/feetSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FEET"
+                android:textColor="#FFFFFF"
+                android:buttonTint="#FFFFFF"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <!-- Number Picker for Height -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <!-- Main Height Picker -->
+        <NumberPicker
+            android:id="@+id/heightPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Converted Height Display -->
+        <TextView
+            android:id="@+id/convertedHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 feet 8 inches"
+            android:textColor="#BDBDBD"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/heightPicker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Continue Button -->
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:text="CONTINUE"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3B82F6"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp" />
+</LinearLayout>

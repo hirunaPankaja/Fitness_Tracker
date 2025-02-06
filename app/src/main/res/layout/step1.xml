@@ -1,0 +1,58 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/step1_background_image">
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/tvBuildBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BUILD YOUR PERFECT BODY"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- GET STARTED Button -->
+    <Button
+        android:id="@+id/btnGetStarted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GET STARTED"
+        android:textColor="#FFFFFF"
+        android:background= "#3F51B5"
+        android:layout_above="@id/tvTerms"
+        android:layout_marginBottom="40dp"
+        android:paddingVertical="10dp"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- ALREADY HAVE AN ACCOUNT Button -->
+    <Button
+        android:id="@+id/btnHaveAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I ALREADY HAVE AN ACCOUNT"
+        android:textColor="#FFFFFF"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_below="@id/tvBuildBody"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="10dp"
+        android:fontFamily="sans-serif" />
+
+    <!-- Terms and Conditions -->
+    <TextView
+        android:id="@+id/tvTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif"
+        android:text="By continuing, you accept our Privacy Policy, Terms of Use,  Subscription Terms."
+        android:textColor="#A9A9A9"
+        android:textSize="12sp" />
+
+</RelativeLayout>

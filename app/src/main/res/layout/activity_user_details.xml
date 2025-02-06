@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/firstNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name" />
+
+    <TextView
+        android:id="@+id/lastNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name" />
+
+    <TextView
+        android:id="@+id/dateOfBirthTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of Birth" />
+
+    <TextView
+        android:id="@+id/emailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email" />
+
+    <TextView
+        android:id="@+id/genderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender" />
+
+    <TextView
+        android:id="@+id/heightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height" />
+
+    <TextView
+        android:id="@+id/reasonForWeightGainTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reason for Weight Gain" />
+
+    <TextView
+        android:id="@+id/dietPlanTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diet Plan" />
+
+    <TextView
+        android:id="@+id/weightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight" />
+
+    <TextView
+        android:id="@+id/goalTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Goal" />
+
+    <TextView
+        android:id="@+id/dailyWorkingTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily Working Time" />
+
+    <TextView
+        android:id="@+id/fitnessLevelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fitness Level" />
+</LinearLayout>

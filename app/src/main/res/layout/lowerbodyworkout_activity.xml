@@ -1,0 +1,378 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpperBodyWorkoutActivity"
+    android:background="#1E1E1E">
+
+    <!-- Header Section -->
+    <ImageView
+        android:id="@+id/headerImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lowerbody"
+        android:contentDescription="Header Image"
+        android:alpha="0.5"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upper Body Workouts"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="@+id/headerImage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="140dp" />
+
+    <TextView
+        android:id="@+id/workoutPlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7 Days • 30 mins/day • Beginner Level"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/headerTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="5dp" />
+
+    <!-- Overview Section -->
+    <TextView
+        android:id="@+id/overviewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overview"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/workoutPlan"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/overviewDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="This plan is tailored to target major lower body muscles—quads, hamstrings, glutes, and calves—without any equipment."
+        android:textSize="14sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/overviewTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
+    <!-- Home Workout Plan Section -->
+    <TextView
+        android:id="@+id/homeWorkoutPlanTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home Workout Plan"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/overviewDetails"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/homeWorkoutPlanDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="This workout plan is designed for beginners and can be done at home with minimal equipment. The plan consists of 7 days of exercises with 30 minutes of workout each day."
+        android:textSize="14sp"
+        android:textColor="#DDDDDD"
+        app:layout_constraintTop_toBottomOf="@+id/homeWorkoutPlanTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
+    <!-- Exercises Section -->
+    <TextView
+        android:id="@+id/exercisesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exercises"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/homeWorkoutPlanDetails"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <ScrollView
+        android:id="@+id/exercisesScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/exercisesTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Exercise 1 - Squats -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <ImageView
+                    android:id="@+id/imgSquats"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/squats"
+                    android:contentDescription="Squats Image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_vertical" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/btnSquats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6C63FF"
+                        android:text="Squats"
+                        android:textColor="#FFFFFF" />
+                    <TextView
+                        android:id="@+id/SquatsDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 sets of 12 reps"
+                        android:textSize="14sp"
+                        android:textColor="#DDDDDD"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Exercise 2 - Lunges -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <ImageView
+                    android:id="@+id/imgLunges"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/lunges"
+                    android:contentDescription="Lunges_Image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_vertical" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/btnlunges"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6C63FF"
+                        android:text="Lunges "
+                        android:textColor="#FFFFFF" />
+                    <TextView
+                        android:id="@+id/LungesDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4 sets of 8 reps"
+                        android:textSize="14sp"
+                        android:textColor="#DDDDDD"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+             <!-- Exercise 3 - Pike Push-ups -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp">
+             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <ImageView
+                    android:id="@+id/imgPikeGluteBridge"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/pike_pushups"
+                    android:contentDescription="Glute Bridges  Image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_vertical" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/btnGluteBridges"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6C63FF"
+                        android:text="Glute Bridges"
+                        android:textColor="#FFFFFF" />
+                    <TextView
+                        android:id="@+id/GluteBridgesDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 sets of 12 reps"
+                        android:textSize="14sp"
+                        android:textColor="#DDDDDD"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+             <!-- Exercise 4 - Wall Sit-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp">
+             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <ImageView
+                    android:id="@+id/imgWallSit"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/wall_sit"
+                    android:contentDescription="Wall Sit Image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_vertical" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/WallSit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6C63FF"
+                        android:text="Wall Sit"
+                        android:textColor="#FFFFFF" />
+                    <TextView
+                        android:id="@+id/Wall_Sit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 sets of 30 seconds"
+                        android:textSize="14sp"
+                        android:textColor="#DDDDDD"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Exercise 5 - Calf Raises -->
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <ImageView
+                    android:id="@+id/imgCalfRaises"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/calf_raises"
+                android:contentDescription="Calf Raises Image"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/btnCalfRaises"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6C63FF"
+                        android:text="Calf Raises"
+                        android:textColor="#FFFFFF" />
+                    <TextView
+                        android:id="@+id/txtCalfRaises"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 sets of 15 reps"
+                        android:textSize="14sp"
+                        android:textColor="#DDDDDD"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnStartSession"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Start Workout"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

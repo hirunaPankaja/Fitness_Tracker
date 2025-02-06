@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "462245983119",
+    "firebase_url": "https://login-gym-efbf2-default-rtdb.firebaseio.com",
+    "project_id": "login-gym-efbf2",
+    "storage_bucket": "login-gym-efbf2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462245983119:android:1dd7cc3f7611b46f1e51fa",
+        "android_client_info": {
+          "package_name": "com.example.gym_workout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2_mcG5zMVggY99q9HRoDbjOwg2tIbTRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462245983119:android:ee6be54a063993ea1e51fa",
+        "android_client_info": {
+          "package_name": "com.shark.gym"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2_mcG5zMVggY99q9HRoDbjOwg2tIbTRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
