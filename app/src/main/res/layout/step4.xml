@@ -1,61 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_primary"
+    android:padding="16dp"
+    android:background="@drawable/register_background2"
     tools:context=".registrationSteps.Step4">
 
-    <!-- Back Arrow -->
-    <ImageView
-        android:id="@+id/backArrow"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_back_arrow"
-        android:contentDescription="Back Arrow"
-        app:layout_constraintStart_toStartOf="parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/top"
+        android:padding="16dp"
+        android:gravity="center_horizontal"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="16dp" />
-
-    <!-- Step Indicator -->
-    <TextView
-        android:id="@+id/stepIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STEP 4 of 24"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/backArrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Step Counter -->
-    <TextView
-        android:id="@+id/stepCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Step 4"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/stepIndicator"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@id/progressBar" />
+        <!-- Step Indicator -->
+        <TextView
+            android:id="@+id/stepIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="STEP 4 of 10"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
-    <!-- Step Progress (Position the progress bar correctly) -->
-    <View
-        android:id="@+id/progressBar"
-        android:layout_width="169.33dp"
-        android:layout_height="4dp"
-        android:background="#3B82F6"
-        app:layout_constraintTop_toBottomOf="@id/stepCounter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        <!-- Progress Bar -->
+        <View
+            android:id="@+id/progressBar"
+            android:layout_width="160dp"
+            android:layout_height="4dp"
+            android:background="@color/button_color" />
+    </LinearLayout>
 
     <!-- Weight Selection Title -->
     <TextView
@@ -67,7 +50,9 @@
         android:textSize="18sp"
         android:textAlignment="center"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@id/top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Weight Display (Above the SeekBar with space) -->
     <TextView
@@ -78,10 +63,10 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/weightSelectionTitle"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Weight SeekBar -->
     <SeekBar
@@ -95,18 +80,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Spacer to push the button to the bottom -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/weightSeekBar"
+        app:layout_constraintBottom_toTopOf="@+id/continueButton"
+        android:layout_weight="1" />
+
     <!-- Continue Button -->
     <Button
         android:id="@+id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="CONTINUE"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded_button"
         android:backgroundTint="#3B82F6"
         android:fontFamily="sans-serif-medium"
+        android:text="CONTINUE"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/weightSeekBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

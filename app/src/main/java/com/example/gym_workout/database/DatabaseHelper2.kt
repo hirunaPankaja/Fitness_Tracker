@@ -13,7 +13,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     companion object {
         const val DATABASE_NAME = "fitness_tracker.db"
-        const val DATABASE_VERSION = 2
+        const val DATABASE_VERSION = 2 // Incremented version to trigger onCreate
 
         const val TABLE_ACTIVITY = "activity_data"
         const val COLUMN_STEPS_COUNT = "steps_count"
@@ -25,16 +25,46 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTableQuery = """
-            CREATE TABLE $TABLE_ACTIVITY (
+        Log.d("DatabaseHelper2", "Creating database tables")
+
+        val createActivityTableQuery = """
+            CREATE TABLE IF NOT EXISTS $TABLE_ACTIVITY (
                 $COLUMN_STEPS_COUNT INTEGER,
                 $COLUMN_DATE DATE
             )
         """
-        db.execSQL(createTableQuery)
+        db.execSQL(createActivityTableQuery)
 
         val createRouteTableQuery = """
-            CREATE TABLE $TABLE_ROUTE (
+            CREATE TABLE IF NOT EXISTS $TABLE_ROUTE (
+                $COLUMN_DATE DATE,
+                $COLUMN_LATITUDE REAL,
+                $COLUMN_LONGITUDE REAL
+            )
+        """
+        db.execSQL(createRouteTableQuery)
+        Log.d("DatabaseHelper2", "Tables created successfully")
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        Log.d("DatabaseHelper2", "Upgrading database from version $oldVersion to $newVersion")
+        // Handle database upgrade if needed
+    }
+
+    /**
+     * Ensure tables are created if they do not exist
+     */
+    private fun ensureTablesExist(db: SQLiteDatabase) {
+        val createActivityTableQuery = """
+            CREATE TABLE IF NOT EXISTS $TABLE_ACTIVITY (
+                $COLUMN_STEPS_COUNT INTEGER,
+                $COLUMN_DATE DATE
+            )
+        """
+        db.execSQL(createActivityTableQuery)
+
+        val createRouteTableQuery = """
+            CREATE TABLE IF NOT EXISTS $TABLE_ROUTE (
                 $COLUMN_DATE DATE,
                 $COLUMN_LATITUDE REAL,
                 $COLUMN_LONGITUDE REAL
@@ -43,74 +73,98 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.execSQL(createRouteTableQuery)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Handle database upgrade if needed
-    }
-
-    fun saveStepsCount(date: String, stepsCount: Int) {
-        val db = this.writableDatabase
+    fun saveStepsCount(date: String, stepsCount: Int): Boolean {
+        val db = writableDatabase
+        ensureTablesExist(db)
         val contentValues = ContentValues().apply {
             put(COLUMN_DATE, date)
             put(COLUMN_STEPS_COUNT, stepsCount)
         }
 
-        val rowsAffected = db.update(TABLE_ACTIVITY, contentValues, "$COLUMN_DATE=?", arrayOf(date))
-        if (rowsAffected == 0) {
-            db.insert(TABLE_ACTIVITY, null, contentValues)
+        val cursor = db.query(
+            TABLE_ACTIVITY,
+            arrayOf(COLUMN_DATE),
+            "$COLUMN_DATE = ?",
+            arrayOf(date),
+            null, null, null
+        )
+
+        val rowExists = cursor.moveToFirst()
+        cursor.close()
+
+        return if (rowExists) {
+            db.update(TABLE_ACTIVITY, contentValues, "$COLUMN_DATE = ?", arrayOf(date)) > 0
+        } else {
+            db.insert(TABLE_ACTIVITY, null, contentValues) != -1L
+        }.also {
+            db.close()
         }
     }
 
-    fun getStepsCountForDate(date: String): Int {
-        val db = this.readableDatabase
-        val cursor = db.query(TABLE_ACTIVITY, arrayOf(COLUMN_STEPS_COUNT), "$COLUMN_DATE=?", arrayOf(date), null, null, null)
-        var stepsCount = 0
-        if (cursor != null && cursor.moveToFirst()) {
-            val columnIndex = cursor.getColumnIndex(COLUMN_STEPS_COUNT)
-            if (columnIndex != -1) {
-                stepsCount = cursor.getInt(columnIndex)
-            } else {
-                Log.e("DatabaseError", "Column $COLUMN_STEPS_COUNT not found")
-            }
-            cursor.close()
-        }
-        return stepsCount
-    }
-
-    fun saveRouteCoordinate(date: String, latitude: Double, longitude: Double) {
-        val db = this.writableDatabase
+    fun saveRouteCoordinate(date: String, latitude: Double, longitude: Double): Boolean {
+        val db = writableDatabase
+        ensureTablesExist(db)
         val contentValues = ContentValues().apply {
             put(COLUMN_DATE, date)
             put(COLUMN_LATITUDE, latitude)
             put(COLUMN_LONGITUDE, longitude)
         }
-        db.insert(TABLE_ROUTE, null, contentValues)
+
+        return db.insert(TABLE_ROUTE, null, contentValues) != -1L
+    }
+
+    fun getStepsCountForDate(date: String): Int {
+        val db = readableDatabase
+        ensureTablesExist(db)
+        val cursor = db.query(
+            TABLE_ACTIVITY,
+            arrayOf(COLUMN_STEPS_COUNT),
+            "$COLUMN_DATE = ?",
+            arrayOf(date),
+            null, null, null
+        )
+
+        var stepsCount = 0
+        if (cursor.moveToFirst()) {
+            stepsCount = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_STEPS_COUNT))
+        } else {
+            Log.e("DatabaseError", "No data found for the date: $date")
+        }
+        cursor.close()
+        return stepsCount
     }
 
     fun getRouteForDate(date: String): List<LatLng> {
-        val db = this.readableDatabase
-        val cursor = db.query(TABLE_ROUTE, arrayOf(COLUMN_LATITUDE, COLUMN_LONGITUDE), "$COLUMN_DATE=?", arrayOf(date), null, null, null)
+        val db = readableDatabase
+        ensureTablesExist(db)
+        val cursor = db.query(
+            TABLE_ROUTE,
+            arrayOf(COLUMN_LATITUDE, COLUMN_LONGITUDE),
+            "$COLUMN_DATE = ?",
+            arrayOf(date),
+            null, null, null
+        )
+
         val route = mutableListOf<LatLng>()
-
-        cursor.use {
-            val latitudeIndex = it.getColumnIndexOrThrow(COLUMN_LATITUDE)
-            val longitudeIndex = it.getColumnIndexOrThrow(COLUMN_LONGITUDE)
-
-            while (it.moveToNext()) {
-                val latitude = it.getDouble(latitudeIndex)
-                val longitude = it.getDouble(longitudeIndex)
-                route.add(LatLng(latitude, longitude))
-            }
+        while (cursor.moveToNext()) {
+            val latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LATITUDE))
+            val longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE))
+            route.add(LatLng(latitude, longitude))
         }
-
+        cursor.close()
         return route
     }
 
-    fun clearPreviousMonthData() {
-        val db = this.writableDatabase
+    fun clearPreviousMonthData(): Boolean {
+        val db = writableDatabase
+        ensureTablesExist(db)
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val firstDayOfMonth = currentDate.substring(0, 8) + "01"
 
-        db.delete(TABLE_ACTIVITY, "$COLUMN_DATE < ?", arrayOf(firstDayOfMonth))
-        db.delete(TABLE_ROUTE, "$COLUMN_DATE < ?", arrayOf(firstDayOfMonth))
+        val activityDeleted = db.delete(TABLE_ACTIVITY, "$COLUMN_DATE < ?", arrayOf(firstDayOfMonth)) > 0
+        val routeDeleted = db.delete(TABLE_ROUTE, "$COLUMN_DATE < ?", arrayOf(firstDayOfMonth)) > 0
+
+        db.close()
+        return activityDeleted || routeDeleted
     }
 }

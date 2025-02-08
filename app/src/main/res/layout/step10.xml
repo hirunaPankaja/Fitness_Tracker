@@ -4,38 +4,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/background_primary"
+    android:background="@drawable/register_background2"
     android:gravity="center_horizontal">
 
-    <!-- Step Indicator -->
-    <TextView
-        android:id="@+id/stepIndicator"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:text="STEP 2 of 24"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
-    <!-- Progress Bar -->
-    <View
-        android:id="@+id/progressBar"
-        android:layout_width="84.44dp"
-        android:layout_height="4dp"
-        android:layout_marginTop="8dp"
-        android:background="#3B82F6" />
+        <!-- Step Indicator -->
+        <TextView
+            android:id="@+id/stepIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="STEP 1 of 10"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <!-- Progress Bar -->
+        <View
+            android:id="@+id/progressBar"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="@color/button_color" />
+    </LinearLayout>
+
 
     <!-- Title -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bio Data"
-        android:textSize="24sp"
-        android:textStyle="bold"
         android:layout_marginBottom="16dp"
-        android:textColor="@android:color/white" />
+        android:text="Bio Data"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <!-- Name Section -->
     <LinearLayout
@@ -63,6 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
+                android:padding="8dp"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/et_background"
                 android:textColor="@android:color/white" />
@@ -87,6 +96,7 @@
                 android:id="@+id/etLastName"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
+                android:padding="8dp"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/et_background"
@@ -187,13 +197,20 @@
         android:textColor="@android:color/white"
         android:layout_marginBottom="16dp" />
 
+    <!-- Spacer to create space between sections -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+
     <!-- Continue Button -->
     <Button
         android:id="@+id/continueButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#1E88E5"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_button"
         android:text="Continue"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
 </LinearLayout>

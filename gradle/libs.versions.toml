@@ -33,6 +33,7 @@ transportationConsumer = "3.0.0"
 material3Android = "1.3.1"
 identityJvm = "202411.1"
 recyclerview = "1.4.0"
+firebaseCrashlyticsBuildtools = "3.0.3"
 
 [libraries]
 activation = { module = "javax.activation:activation", version.ref = "activation" }
@@ -67,6 +68,7 @@ transportation-consumer = { group = "com.google.android.libraries.mapsplatform.t
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 identity-jvm = { group = "com.android.identity", name = "identity-jvm", version.ref = "identityJvm" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
