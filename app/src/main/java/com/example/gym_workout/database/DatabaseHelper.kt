@@ -24,6 +24,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_DIET_PLAN = "dietPlan"
         const val COLUMN_WEIGHT = "weight"
         const val COLUMN_GOAL = "goal"
+        const val COLUMN_PROFILE_IMAGE_PATH = "profileImage"
         const val COLUMN_DAILY_WORKING_TIME = "dailyWorkingTime"
         const val COLUMN_FITNESS_LEVEL = "fitnessLevel"
         const val COLUMN_PASSWORD = "password"
@@ -47,6 +48,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 $COLUMN_DAILY_WORKING_TIME TEXT,
                 $COLUMN_FITNESS_LEVEL TEXT,
                 $COLUMN_PASSWORD TEXT,
+                $COLUMN_PROFILE_IMAGE_PATH TEXT,    
                 $COLUMN_STEP_COMPLETED INTEGER
             )
         """

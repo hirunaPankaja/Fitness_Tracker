@@ -9,16 +9,15 @@ data class UserData(
     var lastName: String = "",
     var dateOfBirth: String = "",
     var gender: String = "",
-    var height: Int =0 ,
+    var height: Int = 0,
     val reasonForWeightGain: String = "",
-    val dietPlan: String ="",
-    var weight: Int =0,
+    val dietPlan: String = "",
+    var weight: Int = 0,
     var goal: String = "",
     var dailyWorkingTime: String = "",
     var fitnessLevel: String = "",
     var email: String = "",
     var password: String = "",
-
-
+    val profileImagePath: String? = null,  // Provide a default value
     var stepCompleted: Int = 0
 )

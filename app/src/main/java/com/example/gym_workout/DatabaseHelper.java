@@ -9,7 +9,7 @@
     public class DatabaseHelper extends SQLiteOpenHelper {
 
         private static final String DATABASE_NAME = "gym.db";
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 2;
 
         public static final String TABLE_USERS = "users";
         public static final String COLUMN_ID = "id";

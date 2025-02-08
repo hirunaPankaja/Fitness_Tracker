@@ -1,5 +1,6 @@
 package com.example.gym_workout.registrationSteps
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,28 +10,36 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gym_workout.R
+import com.example.gym_workout.database.DatabaseHelper
 import java.util.Properties
 import javax.mail.*
 import javax.mail.internet.*
+import kotlin.random.Random
 import kotlin.concurrent.thread
 
 class VerifyEmail : AppCompatActivity() {
+
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.verify_email)
 
+        dbHelper = DatabaseHelper(this)
+
         val emailInput = findViewById<EditText>(R.id.etEmail)
         val verifyButton = findViewById<Button>(R.id.btnVerifyEmail)
 
-        // Inside VerifyEmail class
         verifyButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
 
             // Validate email format
             if (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                // Simulate OTP generation
-                val otp = (1000..9999).random()
+                // Save the email in the database
+                saveEmailToDatabase(email)
+
+                // Simulate OTP generation with secure random number
+                val otp = Random.nextInt(1000, 9999)
 
                 // Send OTP to email in background thread
                 thread {
@@ -53,12 +62,27 @@ class VerifyEmail : AppCompatActivity() {
                 Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
+    // Save email in the database
+    private fun saveEmailToDatabase(email: String) {
+        val contentValues = ContentValues().apply {
+            put("email", email) // Save the email in the database
+            put("stepCompleted", 11) // Track progress
+        }
+
+        val isUpdated = dbHelper.saveOrUpdateStepData(contentValues, "user1")
+        if (isUpdated) {
+            Log.d("VerifyEmail", "Email saved successfully: $email")
+        } else {
+            Log.e("VerifyEmail", "Failed to save email")
+        }
+    }
+
+    // Send OTP to the email
     private fun sendOtpEmail(recipient: String, otp: Int): Boolean {
-        val senderEmail = "hirunapankaja9@gmail.com" // Your email address
-        val senderPassword = "vifm lykm fvwq vjya" // Your email password or app-specific password
+        val senderEmail = "hirunapankaja9@gmail.com" // Replace with your email address
+        val senderPassword = "vifm lykm fvwq vjya" // Replace with your email password
 
         val props = Properties().apply {
             put("mail.smtp.host", "smtp.gmail.com")

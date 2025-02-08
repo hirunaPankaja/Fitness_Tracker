@@ -5,57 +5,111 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.gym_workout.R
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gym_workout.databinding.FragmentHomeBinding
+import com.example.gym_workout.utils.HomeViewModel
+import com.example.gym_workout.utils.SessionAdapter
+import com.example.gym_workout.utils.SessionItem
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Home.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Home : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var sessionRecyclerView: RecyclerView
+    private lateinit var sessionAdapter: SessionAdapter
+    private lateinit var jogLayout: LinearLayout
+    private lateinit var yogaLayout: LinearLayout
+    private lateinit var cyclingLayout: LinearLayout
+    private lateinit var workoutLayout: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        // Initialize RecyclerView
+        sessionRecyclerView = view.findViewById(R.id.session_viewer)
+        sessionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        sessionAdapter = SessionAdapter(mutableListOf())
+        sessionRecyclerView.adapter = sessionAdapter
+
+        // Initialize program layouts
+        jogLayout = view.findViewById(R.id.jog)
+        yogaLayout = view.findViewById(R.id.yoga)
+        cyclingLayout = view.findViewById(R.id.cycling)
+        workoutLayout = view.findViewById(R.id.workout)
+
+        // Set click listeners
+        jogLayout.setOnClickListener {
+            updateRecyclerView(getJogSessions())
+            updateSelectedBackground(jogLayout)
+        }
+
+        yogaLayout.setOnClickListener {
+            updateRecyclerView(getYogaSessions())
+            updateSelectedBackground(yogaLayout)
+        }
+
+        cyclingLayout.setOnClickListener {
+            updateRecyclerView(getCyclingSessions())
+            updateSelectedBackground(cyclingLayout)
+        }
+
+        workoutLayout.setOnClickListener {
+            updateRecyclerView(getWorkoutSessions())
+            updateSelectedBackground(workoutLayout)
+        }
+
+        // Default selection
+        updateRecyclerView(getJogSessions())
+        updateSelectedBackground(jogLayout)
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Home.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Home().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun updateRecyclerView(sessionItems: List<SessionItem>) {
+        sessionAdapter.updateData(sessionItems)
+    }
+
+    private fun updateSelectedBackground(selectedLayout: LinearLayout) {
+        // Reset all backgrounds
+        jogLayout.setBackgroundResource(R.drawable.background_square)
+        yogaLayout.setBackgroundResource(R.drawable.background_square)
+        cyclingLayout.setBackgroundResource(R.drawable.background_square)
+        workoutLayout.setBackgroundResource(R.drawable.background_square)
+
+        // Set selected background
+        selectedLayout.setBackgroundResource(R.drawable.highlight_square)
+    }
+
+    private fun getJogSessions(): List<SessionItem> {
+        return listOf(
+            SessionItem("Walking", "30 mins", R.drawable.walking),
+            SessionItem("Running", "45 mins", R.drawable.running)
+        )
+    }
+
+    private fun getYogaSessions(): List<SessionItem> {
+        return listOf(
+            SessionItem("Yoga", "60 mins", R.drawable.yoga_icon)
+        )
+    }
+
+    private fun getCyclingSessions(): List<SessionItem> {
+        return listOf(
+            SessionItem("Cycling", "45 mins", R.drawable.cycling)
+        )
+    }
+
+    private fun getWorkoutSessions(): List<SessionItem> {
+        return listOf(
+            SessionItem("Upper Body", "30 mins", R.drawable.upper_body),
+            SessionItem("Lower Body", "30 mins", R.drawable.lower_body)
+        )
     }
 }
+

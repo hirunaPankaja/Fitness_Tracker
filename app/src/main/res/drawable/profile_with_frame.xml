@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Profile Image -->
+    <item android:drawable="@drawable/profile" />
+
+    <!-- Frame -->
+    <item android:drawable="@drawable/frame_profile" />
+
+</layer-list>
