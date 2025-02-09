@@ -89,7 +89,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".LowerBodyWorkoutActivity"
+            android:name=".UpperBodyWorkoutActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
