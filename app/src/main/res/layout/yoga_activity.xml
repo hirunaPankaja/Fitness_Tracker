@@ -1,685 +1,537 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpperBodyWorkoutActivity"
+    tools:context=".YogaActivity"
     android:background="#1E1E1E">
 
-    <!-- Header Section -->
-    <ImageView
-        android:id="@+id/headerImage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/yoga"
-        android:contentDescription="Header Image"
-        android:alpha="0.6"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/headerTitle"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Yoga"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toTopOf="@+id/headerImage"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="140dp" />
+        android:orientation="vertical"
+        android:background="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/yogaPlan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="7 Days • 30 mins/day • Beginner Level"
-        android:textSize="16sp"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/headerTitle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="5dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <!-- Overview Section -->
-    <TextView
-        android:id="@+id/overviewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Overview"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/yogaPlan"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+            <!-- Header Section -->
+            <ImageView
+                android:id="@+id/headerImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/yoga"
+                android:contentDescription="Header Image"
+                android:alpha="0.6"
+                tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/overviewDetails"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="This yoga program is designed to improve flexibility, strength, and relaxation. It includes a variety of yoga poses aimed at increasing mobility and calming the mind. Each session is beginner-friendly and focuses on mindful breathing and relaxation techniques."
-        android:textSize="14sp"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/overviewTitle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/headerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yoga Routine"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                app:layout_constraintTop_toTopOf="@+id/headerImage"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="140dp" />
 
-    <!-- Home Yoga Plan Section -->
-    <TextView
-        android:id="@+id/homeYogaPlanTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home Yoga Plan"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/overviewDetails"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+            <TextView
+                android:id="@+id/yogaRoutinePlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7 Days • 30 mins/day • Beginner Level"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintTop_toBottomOf="@+id/headerTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="5dp" />
 
-    <TextView
-        android:id="@+id/homeYogaPlanDetails"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="This yoga plan is perfect for beginners and can be practiced at home with no equipment. It consists of 7 days of yoga sessions, each lasting 30 minutes."
-        android:textSize="14sp"
-        android:textColor="#DDDDDD"
-        app:layout_constraintTop_toBottomOf="@+id/homeYogaPlanTitle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp" />
+            <!-- Overview Section -->
+            <TextView
+                android:id="@+id/overviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overview"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                app:layout_constraintTop_toBottomOf="@+id/yogaRoutinePlan"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp" />
 
-    <!-- Exercises Section -->
-    <TextView
-        android:id="@+id/exercisesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Yoga Poses"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/homeYogaPlanDetails"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+            <TextView
+                android:id="@+id/overviewDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="This yoga routine is designed to improve flexibility, strength, and relaxation. It includes a variety of yoga poses aimed at increasing mobility and calming the mind. Each session is beginner-friendly and focuses on mindful breathing and relaxation techniques."
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintTop_toBottomOf="@+id/overviewTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp" />
 
-    <ScrollView
-        android:id="@+id/yogaPosesScroll"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/exercisesTitle"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+            <!-- Yoga Poses Section -->
+            <TextView
+                android:id="@+id/exercisesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yoga Poses"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                app:layout_constraintTop_toBottomOf="@+id/overviewDetails"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <!-- Poses wrapped in ScrollView for scrolling -->
+        <ScrollView
+            android:id="@+id/yogaPosesScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/transparent">
+
+                <!-- Pose 1 - Child's Pose -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgChildPose"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/childs_pose"
+                            android:contentDescription="Child's Pose Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnChildPose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Child's Pose"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/childPoseDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 30–60 seconds"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 2 - Downward Dog -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgDownwardDog"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/downward_dog"
+                            android:contentDescription="Downward Dog Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnDownwardDog"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Downward Dog"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/downwardDogDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 30–60 seconds"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 3 - Cat-Cow Pose -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgCatCowPose"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/cat_cow_pose"
+                            android:contentDescription="Cat-Cow Pose Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnCatCowPose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Cat-Cow Pose"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/catCowPoseDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Perform for 8–10 cycles (inhale/exhale)"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 4 - Warrior II -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgWarriorIIPose"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/warrior_ii_pose"
+                            android:contentDescription="Warrior II Pose Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnWarriorIIPose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Warrior II Pose"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/warriorIIPoseDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 30 seconds on each side"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 5 - Cobra Pose -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgCobraPose"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/cobra_pose"
+                            android:contentDescription="Cobra Pose Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnCobraPose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Cobra Pose"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/cobraPoseDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 30–45 seconds"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 6 - Seated Forward Bend -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgSeatedForwardBend"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/seated_forward_bend"
+                            android:contentDescription="Seated Forward Bend Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnSeatedForwardBend"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Seated Forward Bend"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/seatedForwardBendDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 30–60 seconds"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 7 - Bridge Pose -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgBridgePose"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/bridge_pose"
+                            android:contentDescription="Bridge Pose Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnBridgePose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Bridge Pose"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/bridgePoseDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 30–45 seconds"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pose 8 - Corpse Pose -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#2A2A2A"
+                    android:padding="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical|center_horizontal">
+                        <ImageView
+                            android:id="@+id/imgCorpsePose"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/corpse_pose"
+                            android:contentDescription="Corpse Pose Image"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal">
+                            <TextView
+                                android:id="@+id/btnCorpsePose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Corpse Pose"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/corpsePoseDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hold for 2–5 minutes"
+                                android:textSize="14sp"
+                                android:textColor="#DDDDDD"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Start Session Button -->
+        <Button
+            android:id="@+id/btnStartSession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@android:color/transparent">
-
-
-            <!-- Pose 1 - Downward Dog -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgDownwardDog"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Downward Dog Pose"
-                        android:src="@drawable/downward_dog"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnDownwardDog"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Downward Dog"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/downwardDogDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 30 seconds"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <!-- Pose 2 - Cobra Pose -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgCobraPose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Cobra Pose"
-                        android:src="@drawable/cobra_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnCobraPose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Cobra Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/cobraPoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 20 seconds"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 3 - Child's Pose -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgChildPose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Child's Pose"
-                        android:src="@drawable/childs_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnChildPose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Child's Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/childPoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 30 seconds"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 4 - Tree Pose -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgTreePose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Tree Pose"
-                        android:src="@drawable/tree_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnTreePose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Tree Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/treePoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 15 seconds each side"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 5 - Warrior Pose -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgWarriorPose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Warrior Pose"
-                        android:src="@drawable/warrior_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnWarriorPose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Warrior Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/warriorPoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 20 seconds each side"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 6 - Downward Dog with Leg Lift -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgDownwardDogLegLift"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Downward Dog with Leg Lift"
-                        android:src="@drawable/downward_dogl"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnDownwardDogLegLift"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Downward Dog with Leg Lift"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/downwardDogLegLiftDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 15 seconds each leg"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 7 - Pigeon Pose -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgPigeonPose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Pigeon Pose"
-                        android:src="@drawable/pigeon_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnPigeonPose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Pigeon Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/pigeonPoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 20 seconds each side"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 8 - Seated Forward Bend -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgSeatedForwardBend"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Seated Forward Bend"
-                        android:src="@drawable/seated_forward_bend"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnSeatedForwardBend"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Seated Forward Bend"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/seatedForwardBendDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 30 seconds"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 9 - Bridge Pose -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgBridgePose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Bridge Pose"
-                        android:src="@drawable/bridge_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnBridgePose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Bridge Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/bridgePoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 20 seconds"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Pose 10 -   -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#2A2A2A"
-                android:padding="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgWarriorIIPose"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="Warrior II Pose"
-                        android:src="@drawable/warrior_pose"
-                        android:scaleType="centerCrop" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnWarriorIIPose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#6C63FF"
-                            android:text="Warrior II Pose"
-                            android:textColor="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/warriorIIPoseDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hold for 20 seconds each side"
-                            android:textSize="14sp"
-                            android:textColor="#DDDDDD"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- Start Session Button -->
-    <Button
-        android:id="@+id/btnStartSession"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Start Session"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="Start Session"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </LinearLayout>
+</ScrollView>
