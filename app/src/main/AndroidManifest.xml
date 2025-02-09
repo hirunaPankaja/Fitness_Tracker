@@ -101,6 +101,9 @@
             android:name=".Workout"
             android:exported="true" />
         <activity
+
+            android:name=".UpperBodyWorkoutActivity"
+            android:exported="true">
             android:name=".step1"
             android:exported="true" />
         <activity
@@ -113,6 +116,7 @@
             android:name=".MainActivity1"
             android:exported="true"
             android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
