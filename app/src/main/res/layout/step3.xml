@@ -4,46 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_primary"
+    android:background="@drawable/register_background2"
     android:padding="16dp">
 
-    <!-- Top Bar -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp">
-
-        <!-- Back Arrow -->
-        <ImageView
-            android:id="@+id/backArrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_back_arrow"
-            android:contentDescription="Back Arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
         <!-- Step Indicator -->
         <TextView
             android:id="@+id/stepIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="STEP 3 of 24"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="STEP 3 of 10"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/backArrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="14sp" />
 
-    <!-- Progress Bar -->
-    <View
-        android:id="@+id/progressBar"
-        android:layout_width="126.67dp"
-        android:layout_height="4dp"
-        android:layout_marginTop="8dp"
-        android:background="#3B82F6" />
+        <!-- Progress Bar -->
+        <View
+            android:id="@+id/progressBar"
+            android:layout_width="120dp"
+            android:layout_height="4dp"
+            android:background="@color/button_color" />
+    </LinearLayout>
 
     <!-- Height Selector Title -->
     <TextView
@@ -105,7 +93,8 @@
     <!-- Number Picker for Height -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="16dp">
 
         <!-- Main Height Picker -->
@@ -115,9 +104,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="#FFFFFF"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/convertedHeight"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!-- Converted Height Display -->
         <TextView
@@ -139,10 +129,15 @@
         android:id="@+id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:text="CONTINUE"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded_button"
         android:backgroundTint="#3B82F6"
         android:fontFamily="sans-serif-medium"
-        android:textSize="16sp" />
+        android:text="CONTINUE"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </LinearLayout>

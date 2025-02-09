@@ -7,9 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gym_workout.R
 import com.example.gym_workout.database.DatabaseHelper
-
 import com.example.gym_workout.utils.NavigationHelper
-
 
 class Step2 : AppCompatActivity() {
 
@@ -30,6 +28,17 @@ class Step2 : AppCompatActivity() {
             val radioButton = findViewById<RadioButton>(checkedId)
             selectedGender = radioButton.text.toString()
             Log.d("Step2", "Selected gender: $selectedGender")
+
+            // Clear previous selections and reset backgrounds
+            for (i in 0 until genderOptions.childCount) {
+                val child = genderOptions.getChildAt(i)
+                if (child is RadioButton) {
+                    child.setBackgroundResource(R.drawable.radio_button_unselected) // Unselected background
+                }
+            }
+            // Highlight the selected RadioButton
+            radioButton.setBackgroundResource(R.drawable.radio_button_selected) // Selected background
+
         }
 
         // Handle continue button click

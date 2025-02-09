@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background image -->
+    <item android:drawable="@drawable/lunch" />
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#BF000000" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,7 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GYM_Workout" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<resources>
+    <!-- Dark Theme -->
+    <style name="Theme.GYM_Workout" parent="Base.Theme.GYM_Workout">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="android:windowBackground">@color/color_primary</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <!-- Add other theme attributes here -->
     </style>
 </resources>

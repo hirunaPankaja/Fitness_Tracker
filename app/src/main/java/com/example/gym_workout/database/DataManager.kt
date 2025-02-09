@@ -1,5 +1,6 @@
 package com.example.gym_workout.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import java.text.SimpleDateFormat
@@ -32,6 +33,7 @@ class DataManager(private val context: Context) {
                 goal = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_GOAL)),
                 dailyWorkingTime = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DAILY_WORKING_TIME)),
                 fitnessLevel = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FITNESS_LEVEL)),
+                profileImagePath = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_IMAGE_PATH)),
                 password = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PASSWORD)),
                 stepCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_STEP_COMPLETED))
             )
@@ -62,7 +64,15 @@ class DataManager(private val context: Context) {
             "Sleep Need" to sleepNeed
         )
     }
-
+    fun saveProfileImagePath(path: String) {
+        val userId = "user1"
+        val db = dbHelper.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_PROFILE_IMAGE_PATH, path)
+        }
+        db.update(DatabaseHelper.TABLE_USERS, contentValues, "${DatabaseHelper.COLUMN_USER_ID} = ?", arrayOf(userId))
+        db.close()
+    }
     private fun calculateBMI(weight: Int, height: Int): Double {
         val heightInMeters = height / 100.0
         return weight / (heightInMeters * heightInMeters)

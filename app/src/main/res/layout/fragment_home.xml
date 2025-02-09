@@ -1,14 +1,422 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    android:background="@color/color_primary"
+    android:orientation="vertical"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    tools:context=".MainActivity1">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Spacer to create space between sections -->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="16dp" />
 
-</FrameLayout>
+    <!-- Workout Progress Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/background_square"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Titles -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/progress_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Workout Progress!"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_color" />
+
+            <TextView
+                android:id="@+id/progress_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="75% complete, 14 exercises left"
+                android:textSize="14sp"
+                android:textColor="@color/gray" />
+        </LinearLayout>
+
+        <!-- Circular Progress with Text -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/circularProgressBarMain"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:cpb_background_progressbar_color="@color/yellow"
+                app:cpb_background_progressbar_width="5dp"
+                app:cpb_progress="75"
+                app:cpb_progress_max="100"
+                app:cpb_progressbar_color="@color/black"
+                app:cpb_progressbar_width="5dp" />
+
+            <!-- Calories Value Inside Circle -->
+            <TextView
+                android:id="@+id/workout_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="75%"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- Spacer to create space between sections -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <!-- Parent LinearLayout to contain two child LinearLayouts side by side -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- First Metrics Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/background_square"
+            android:padding="8dp"
+            android:gravity="center">
+
+            <!-- Icon and Title Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Calories Burned Text -->
+                <TextView
+                    android:id="@+id/calories_burned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Calories"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_color" />
+                <!-- Icon -->
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/flame"
+                    android:contentDescription="Calories Icon"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+            <!-- Spacer to create space between sections -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <!-- Circular Progress Bar with Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- Circular Progress Bar with Text -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                            android:id="@+id/circularProgressBar1"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            app:cpb_background_progressbar_color="@color/yellow"
+                            app:cpb_background_progressbar_width="5dp"
+                            app:cpb_progress="70"
+                            app:cpb_progress_max="100"
+                            app:cpb_progressbar_color="@color/color_primary"
+                            app:cpb_progressbar_width="5dp" />
+
+                        <!-- Calories Value Inside Circle -->
+                        <TextView
+                            android:id="@+id/calories_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="730"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_color"
+                            android:layout_centerInParent="true" />
+
+                        <TextView
+                            android:id="@+id/calories_value2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="kcl"
+                            android:textSize="15sp"
+                            android:textColor="@color/gray"
+                            android:layout_below="@id/calories_value"
+                            android:layout_marginTop="20dp"
+                            android:layout_centerHorizontal="true" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_square"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:padding="8dp">
+
+            <!-- Steps Title Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Foot steps Text -->
+                <TextView
+                    android:id="@+id/Footsteps_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foot Steps"
+                    android:textColor="@color/text_color"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <!-- Spacer to create space between sections -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Icon -->
+                <ImageView
+                    android:id="@+id/steps_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/foot_steps"
+                    android:layout_gravity="center"
+                    android:contentDescription="Steps Icon"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+            <!-- Spacer to create space between sections -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <!-- Foot steps Text -->
+                <TextView
+                    android:id="@+id/Footsteps_counts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2300"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Spacer to create space between sections -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:gravity="center_vertical">
+
+        <!-- Titles -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Programs"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="16dp">
+
+
+                <LinearLayout
+                    android:id="@+id/jog"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/background_square"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/jogging" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jog"
+                        android:textSize="14sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_color"/>
+                </LinearLayout>
+
+                <!-- Caloric Needs -->
+                <LinearLayout
+                    android:id="@+id/yoga"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/background_square"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/yoga_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yoga"
+                        android:textSize="14sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_color"/>
+                </LinearLayout>
+
+                <!-- Another Layout -->
+                <LinearLayout
+                    android:id="@+id/cycling"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/background_square"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cycling" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cycling"
+                        android:textSize="14sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_color"/>
+                </LinearLayout>
+                <!-- Yet Another Layout -->
+                <LinearLayout
+                    android:id="@+id/workout"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_square"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/workout" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Workout"
+                        android:textSize="14sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_color"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <!-- RecyclerView for Programs Section -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/session_viewer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:padding="2dp" />
+</LinearLayout>
+
