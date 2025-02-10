@@ -16,4 +16,5 @@
     <color name="secondaryColor">#FF4081</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorSecondary">#B0B0B0</color>
+    <color name="black">#757575</color>
 </resources>
