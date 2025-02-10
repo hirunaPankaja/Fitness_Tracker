@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream
 class DatabaseHelperWorkout(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_NAME = "gym_workout.db"
+        private const val DATABASE_NAME = "gymworkout.db"
         private const val DATABASE_VERSION = 1
         const val TABLE_EXERCISES = "exercises"
         const val COLUMN_ID = "_id"

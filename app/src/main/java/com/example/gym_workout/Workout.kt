@@ -6,9 +6,10 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.gym_workout.database.DatabaseHelperWorkout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.firebase.firestore.FirebaseFirestore
+
 
 class Workout : AppCompatActivity() {
 
@@ -21,12 +22,13 @@ class Workout : AppCompatActivity() {
     private lateinit var timerDisplay: TextView
     private lateinit var circularProgressIndicator: CircularProgressIndicator
 
-    // Firestore and UI elements
-    private lateinit var db: FirebaseFirestore
+    // UI elements for exercise details
     private lateinit var imageViewIllustration: ImageView
     private lateinit var textViewTitle: TextView
     private lateinit var textViewInstructions: TextView
     private lateinit var textViewRepsSets: TextView
+
+    private lateinit var dbHelper: DatabaseHelperWorkout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +45,7 @@ class Workout : AppCompatActivity() {
         textViewInstructions = findViewById(R.id.textViewInstructions)
         textViewRepsSets = findViewById(R.id.textViewRepsSets)
 
-        // Initialize Firebase Firestore
-        db = FirebaseFirestore.getInstance()
+        dbHelper = DatabaseHelperWorkout(this)
 
         // Button click listeners
         startButton.setOnClickListener { startTimer() }
@@ -59,8 +60,8 @@ class Workout : AppCompatActivity() {
         updateTimerText()
         updateProgressIndicator()
 
-        // Fetch data from Firestore
-        fetchDataFromFirestore()
+        // Fetch data from SQLite
+        fetchDataFromSQLite()
     }
 
     private fun startTimer() {
@@ -104,30 +105,17 @@ class Workout : AppCompatActivity() {
         circularProgressIndicator.progress = progress
     }
 
-    private fun fetchDataFromFirestore() {
-        db.collection("exercises")
-            .document("PushUps")
-            .get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    val title = documentSnapshot.getString("name")
-                    val instructions = documentSnapshot.getString("instructions")
-                    val repsSets = documentSnapshot.getString("reps")
+    private fun fetchDataFromSQLite() {
+        val exerciseName = intent.getStringExtra("exerciseName")
+        val exercise = dbHelper.getExercise(exerciseName ?: "DefaultExercise")
 
-                    textViewTitle.text = title
-                    textViewInstructions.text = instructions
-                    textViewRepsSets.text = repsSets
-
-                    // Log the retrieved data
-                    Log.d("Firestore", "Title: $title")
-                    Log.d("Firestore", "Instructions: $instructions")
-                    Log.d("Firestore", "Reps and Sets: $repsSets")
-                } else {
-                    Log.d("Firestore", "No such document")
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error fetching data", e)
-            }
+        if (exercise != null) {
+            textViewTitle.text = exercise.title
+            textViewInstructions.text = exercise.instructions
+            textViewRepsSets.text = exercise.repsSets
+            imageViewIllustration.setImageBitmap(exercise.image)
+        } else {
+            Log.e("Workout", "No exercise found with name $exerciseName")
+        }
     }
 }
