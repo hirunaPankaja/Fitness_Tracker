@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:layout_marginEnd="10dp" />
@@ -150,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:layout_marginStart="10dp"
@@ -169,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_color"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:layout_marginStart="10dp"
@@ -273,7 +273,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/food_suggestion"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_color"
                 android:textSize="14sp" />
 
             <TextView
@@ -304,8 +304,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/breakfast"
-                    android:textColor="@color/text_color"
-                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:padding="8dp"/>
 
@@ -318,7 +318,7 @@
                     android:id="@+id/breakfastFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginStart="10dp"
@@ -338,21 +338,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lunch"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/white"
                     android:padding="8dp"/>
 
                 <View
                     android:layout_width="3dp"
                     android:layout_height="40dp"
                     android:background="@color/gray"
-                    android:layout_marginStart="29dp"/>
+                    android:layout_marginStart="30dp"/>
                 <TextView
                     android:id="@+id/lunchFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginStart="10dp"
@@ -373,22 +373,21 @@
                     android:layout_height="wrap_content"
                     android:text="@string/dinner"
                     android:textStyle="bold"
-                    android:textSize="14sp"
-
-                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
                     android:padding="8dp"/>
 
                 <View
                     android:layout_width="3dp"
                     android:layout_height="40dp"
                     android:background="@color/gray"
-                    android:layout_marginStart="27dp"/>
+                    android:layout_marginStart="28dp"/>
 
                 <TextView
                     android:id="@+id/dinnerFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginStart="10dp"
