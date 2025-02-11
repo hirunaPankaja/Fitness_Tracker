@@ -155,4 +155,8 @@ class YogaActivity : AppCompatActivity() {
             Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
         }
     }
+
+    fun onBackClick(view: View) {
+        finish()
+    }
 }

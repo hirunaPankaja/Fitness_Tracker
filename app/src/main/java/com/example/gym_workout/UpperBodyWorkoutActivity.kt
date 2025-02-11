@@ -123,9 +123,17 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
     fun onStartWorkoutClick(view: View) {
         Log.d("UpperBodyWorkoutActivity", "Start Workout button clicked")
         Toast.makeText(this, "Workout Started!", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, Workout::class.java)
-        intent.putExtra("exerciseName", "DefaultExercise")
-        startActivity(intent)
+        val exercise = dbHelper.getExercise("PikePushUps") // Get the first exercise
+        if (exercise != null) {
+            val intent = Intent(this, Workout::class.java)
+            intent.putExtra("title", exercise.title)
+            intent.putExtra("instructions", exercise.instructions)
+            intent.putExtra("repsSets", exercise.repsSets)
+            intent.putExtra("exerciseName", exercise.name) // For fetching image
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun onBackClick(view: View) {

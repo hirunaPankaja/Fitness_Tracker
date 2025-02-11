@@ -3,6 +3,7 @@ package com.example.gym_workout
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -117,5 +118,9 @@ class Workout : AppCompatActivity() {
         } else {
             Log.e("Workout", "No exercise found with name $exerciseName")
         }
+    }
+
+    fun onBackClick(view: View) {
+        finish()
     }
 }
