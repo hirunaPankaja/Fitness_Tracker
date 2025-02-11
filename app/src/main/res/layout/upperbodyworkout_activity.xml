@@ -14,6 +14,21 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/white_background"
+            android:contentDescription="@string/back"
+            android:onClick="onBackClick"
+            android:src="@drawable/arrowback"
+            tools:ignore="TouchTargetSizeCheck" />
+
 
         <!-- Header Section -->
         <ImageView

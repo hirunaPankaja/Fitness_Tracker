@@ -106,20 +106,18 @@
         <activity
             android:name=".UpperBodyWorkoutActivity"
             android:exported="true"/>
-            android:exported="true" />
 
-        <activity
-            android:name=".step1"
-            android:exported="true" />
+
         <activity
             android:name=".Setting"
             android:exported="true" />
 
         <activity
-            android:name=".MainActivity1"
+            android:name=".LowerBodyWorkoutActivity"
             android:exported="true" />
+
         <activity
-            android:name=".step1"
+            android:name=".MainActivity1"
             android:exported="true"
             android:theme="@style/SplashTheme">
 

@@ -32,6 +32,7 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
         binding.imgTricepDips.setOnClickListener { onCardClick(it) }
 
         binding.btnStartSession.setOnClickListener { onStartWorkoutClick(it) }
+        binding.btnBack.setOnClickListener { onBackClick(it) } // Add this line for the back button
     }
 
     private fun insertExerciseData() {
@@ -125,5 +126,9 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
         val intent = Intent(this, Workout::class.java)
         intent.putExtra("exerciseName", "DefaultExercise")
         startActivity(intent)
+    }
+
+    fun onBackClick(view: View) {
+        finish()
     }
 }
