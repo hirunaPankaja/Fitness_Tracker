@@ -34,6 +34,7 @@ material3Android = "1.3.1"
 identityJvm = "202411.1"
 recyclerview = "1.4.0"
 firebaseCrashlyticsBuildtools = "3.0.3"
+firebaseInappmessaging = "21.0.1"
 
 [libraries]
 activation = { module = "javax.activation:activation", version.ref = "activation" }
@@ -69,6 +70,7 @@ androidx-material3-android = { group = "androidx.compose.material3", name = "mat
 identity-jvm = { group = "com.android.identity", name = "identity-jvm", version.ref = "identityJvm" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
+firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

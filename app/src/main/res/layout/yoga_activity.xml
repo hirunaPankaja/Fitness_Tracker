@@ -5,23 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".YogaActivity"
-    android:background="#1E1E1E"
-    tools:ignore="ScrollViewCount">
-
-    <!-- Back Button -->
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/white_background"
-        android:contentDescription="@string/back"
-        android:onClick="onBackClick"
-        android:src="@drawable/arrowback"
-        tools:ignore="TouchTargetSizeCheck" />
+    android:background="#1E1E1E">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +16,22 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/black"
+                android:contentDescription="@string/back"
+                android:onClick="onBackClick"
+                android:src="@drawable/white_arrow"
+                tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
+
 
             <!-- Header Section -->
             <ImageView
@@ -245,7 +245,7 @@
                             android:id="@+id/imgCatCowPose"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:src="@drawable/cat_cow_pose"
+
                             android:contentDescription="Cat-Cow Pose Image"
                             android:layout_marginEnd="16dp"
                             android:layout_gravity="center_vertical" />
@@ -296,7 +296,7 @@
                             android:id="@+id/imgWarriorIIPose"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:src="@drawable/warrior_ii_pose"
+
                             android:contentDescription="Warrior II Pose Image"
                             android:layout_marginEnd="16dp"
                             android:layout_gravity="center_vertical" />
@@ -500,7 +500,7 @@
                             android:id="@+id/imgCorpsePose"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:src="@drawable/corpse_pose"
+
                             android:contentDescription="Corpse Pose Image"
                             android:layout_marginEnd="16dp"
                             android:layout_gravity="center_vertical" />

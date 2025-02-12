@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.identity.jvm)
     implementation(libs.androidx.recyclerview)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.firebase.inappmessaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
