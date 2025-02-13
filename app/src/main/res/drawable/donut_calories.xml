@@ -1,0 +1,8 @@
+<!-- res/drawable/donut_calories.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadiusRatio="3"
+    android:thicknessRatio="6"
+    android:useLevel="true">
+    <solid android:color="#00FF00" /> <!-- Replace with your desired color -->
+</shape>

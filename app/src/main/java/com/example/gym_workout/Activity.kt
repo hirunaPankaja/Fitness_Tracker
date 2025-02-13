@@ -21,11 +21,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gym_workout.Map1
 import com.example.gym_workout.database.DatabaseHelper2
 import com.example.gym_workout.database.DatabaseHelper2.Companion.COLUMN_DATE
 import com.example.gym_workout.database.DatabaseHelper2.Companion.COLUMN_LATITUDE
@@ -70,13 +68,10 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         databaseHelper = DatabaseHelper2(requireContext())
-        // Start the foreground service
-        val serviceIntent = Intent(context, LocationAndStepService::class.java)
-        ContextCompat.startForegroundService(requireContext(), serviceIntent)
-        val db = databaseHelper.writableDatabase
         arguments?.let {
             // Additional initialization code if needed
         }
+        requestPermissions()
 
         // Renew data at midnight
         renewDataAtMidnight()
@@ -113,12 +108,37 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
-        sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI)
+        if (stepCounter == null) {
+            Toast.makeText(context, "Step Counter sensor not available!", Toast.LENGTH_SHORT).show()
+        } else {
+            sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI)
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+        // Initialize locationCallback here
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                if (!viewingPastData) {
+                    locationResult ?: return
+                    for (location in locationResult.locations) {
+                        val currentLatLng = LatLng(location.latitude, location.longitude)
+                        val points = currentPolyline.points
+                        points.add(currentLatLng)
+                        currentPolyline.points = points
+
+                        saveRouteCoordinate(currentLatLng)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15.0f))
+
+                        Log.d("LocationUpdate", "Location: ${location.latitude}, ${location.longitude}")
+                    }
+                }
+            }
+        }
+
         return view
     }
+
 
     private fun renewDataAtMidnight() {
         val calendar = Calendar.getInstance()
@@ -186,6 +206,7 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         currentPolyline.points = route
     }
 
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
@@ -214,30 +235,16 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
             )
         }
     }
-
     private fun requestPermissions() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACTIVITY_RECOGNITION
-                ),
-                LOCATION_PERMISSION_REQUEST_CODE
-            )
-        } else {
-            // Permissions are already granted, start the service
-            startForegroundService()
-        }
-    }
-
-    private fun startForegroundService() {
-        val serviceIntent = Intent(context, LocationAndStepService::class.java)
-        ContextCompat.startForegroundService(requireContext(), serviceIntent)
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACTIVITY_RECOGNITION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
     }
 
     private fun setupLocationUpdates() {
@@ -307,22 +314,26 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event == null || event.sensor.type != Sensor.TYPE_STEP_COUNTER) return
+        if (event == null) return
 
-        if (previousTotalSteps == 0f) {
-            previousTotalSteps = event.values[0]
+        if (event.sensor.type == Sensor.TYPE_STEP_COUNTER) {
+            if (previousTotalSteps == 0f) {
+                previousTotalSteps = event.values[0]
+            }
+            totalSteps = event.values[0]
+            val currentSteps = (totalSteps - previousTotalSteps).toInt()
+            updateStepCount(currentSteps)
+            val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            databaseHelper.saveStepsCount(currentDate, currentSteps)
         }
-        totalSteps = event.values[0]
-        val currentSteps = (totalSteps - previousTotalSteps).toInt()
-        updateStepCount(currentSteps)
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        databaseHelper.saveStepsCount(currentDate, currentSteps)
     }
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
     private fun updateStepCount(steps: Int) {
         footStepsTextView.text = steps.toString()
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -330,9 +341,12 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
+
     override fun onResume() {
         super.onResume()
-        sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI)
+        if (stepCounter != null) {
+            sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI)
+        }
         if (::mMap.isInitialized && ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -344,6 +358,7 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
             setupLocationUpdates()
         }
     }
+
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -357,3 +372,4 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
             }
     }
 }
+

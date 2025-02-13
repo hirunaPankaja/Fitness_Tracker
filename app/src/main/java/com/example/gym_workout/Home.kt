@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gym_workout.databinding.FragmentHomeBinding
-import com.example.gym_workout.utils.HomeViewModel
+import com.example.gym_workout.database.DatabaseHelper2
 import com.example.gym_workout.utils.SessionAdapter
 import com.example.gym_workout.utils.SessionItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Home : Fragment() {
 
@@ -23,6 +24,8 @@ class Home : Fragment() {
     private lateinit var yogaLayout: LinearLayout
     private lateinit var cyclingLayout: LinearLayout
     private lateinit var workoutLayout: LinearLayout
+    private lateinit var footstepsCountsTextView: TextView
+    private lateinit var databaseHelper: DatabaseHelper2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +33,17 @@ class Home : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        // Initialize DatabaseHelper
+        databaseHelper = DatabaseHelper2(requireContext())
+
+        // Initialize TextView
+        footstepsCountsTextView = view.findViewById(R.id.Footsteps_counts)
+
+        // Get current date steps count and set to TextView
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val stepsCount = getStepsCountForDate(currentDate)
+        footstepsCountsTextView.text = stepsCount.toString()
 
         // Initialize RecyclerView
         sessionRecyclerView = view.findViewById(R.id.session_viewer)
@@ -62,6 +76,7 @@ class Home : Fragment() {
         workoutLayout.setOnClickListener {
             updateRecyclerView(getWorkoutSessions())
             updateSelectedBackground(workoutLayout)
+
         }
 
         // Default selection
@@ -69,6 +84,10 @@ class Home : Fragment() {
         updateSelectedBackground(jogLayout)
 
         return view
+    }
+
+    private fun getStepsCountForDate(date: String): Int {
+        return databaseHelper.getStepsCountForDate(date)
     }
 
     private fun updateRecyclerView(sessionItems: List<SessionItem>) {
@@ -111,5 +130,5 @@ class Home : Fragment() {
             SessionItem("Lower Body", "30 mins", R.drawable.lower_body)
         )
     }
-}
 
+}

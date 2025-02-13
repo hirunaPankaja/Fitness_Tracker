@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Google Map -->
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnStart"
+        android:layout_below="@id/runStats"/>
+
+    <!-- Run Stats -->
+    <LinearLayout
+        android:id="@+id/runStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:background="@drawable/semi_round_plate"
+            android:text="Time: 00:00:00"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/txtDistance"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:text="Distance: 0.0 km"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/semi_round_plate"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/txtCalories"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:background="@drawable/semi_round_plate"
+            android:text="Calories:     0 kcal"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+    <!-- Start Button -->
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="@string/start"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#FF5722"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"/>
+</RelativeLayout>

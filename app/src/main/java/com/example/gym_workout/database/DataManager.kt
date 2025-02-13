@@ -47,6 +47,19 @@ class DataManager(private val context: Context) {
         return userData
     }
 
+    fun getUserWeight(userId: String): Float? {
+        val db = dbHelper.readableDatabase
+        val query = "SELECT ${DatabaseHelper.COLUMN_WEIGHT} FROM ${DatabaseHelper.TABLE_USERS} WHERE ${DatabaseHelper.COLUMN_USER_ID} = ?"
+        val cursor = db.rawQuery(query, arrayOf(userId))
+
+        var weight: Float? = null
+        if (cursor.moveToFirst()) {
+            weight = cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_WEIGHT))
+        }
+        cursor.close()
+        db.close()
+        return weight
+    }
 
     fun calculateMetrics(user: UserData): Map<String, Any> {
         val bmi = calculateBMI(user.weight, user.height)
@@ -54,7 +67,7 @@ class DataManager(private val context: Context) {
         val age = calculateAge(user.dateOfBirth)
         val caloricNeeds = calculateCaloricNeeds(user.weight, user.height, age, user.gender, user.fitnessLevel)
         val nutrientNeeds = calculateNutrientNeeds(user.weight)
-        val sleepNeed = calculateSleepNeed()
+        val sleepNeed = calculateSleepNeed(age)
 
         return mapOf(
             "BMI" to bmi,
@@ -64,6 +77,7 @@ class DataManager(private val context: Context) {
             "Sleep Need" to sleepNeed
         )
     }
+
     fun saveProfileImagePath(path: String) {
         val userId = "user1"
         val db = dbHelper.writableDatabase
@@ -73,6 +87,7 @@ class DataManager(private val context: Context) {
         db.update(DatabaseHelper.TABLE_USERS, contentValues, "${DatabaseHelper.COLUMN_USER_ID} = ?", arrayOf(userId))
         db.close()
     }
+
     private fun calculateBMI(weight: Int, height: Int): Double {
         val heightInMeters = height / 100.0
         return weight / (heightInMeters * heightInMeters)
@@ -105,11 +120,20 @@ class DataManager(private val context: Context) {
         return mapOf("protein" to protein, "fat" to fat, "carbs" to carbs)
     }
 
-    private fun calculateSleepNeed(): Int {
-        return 8 // assuming an average need of 8 hours
+    private fun calculateSleepNeed(age: Int): Int {
+        return when (age) {
+            in 12..24 -> 13
+            in 25..59 -> 11
+            in 60..107 -> 10
+            in 108..155 -> 9
+            in 156..229 -> 8
+            in 230..789 -> 8
+            else -> 7
+        }
     }
 
-    public fun calculateAge(dateOfBirth: String): Int {
+
+    fun calculateAge(dateOfBirth: String): Int {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val dob = sdf.parse(dateOfBirth)
         val today = Calendar.getInstance()
