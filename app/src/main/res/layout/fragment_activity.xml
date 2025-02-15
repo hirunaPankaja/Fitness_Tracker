@@ -63,14 +63,30 @@
                     android:textSize="14sp"
                     android:gravity="center" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/footSteps"
-                    android:textColor="#00FF00"
-                    android:textSize="16sp"
-                    android:gravity="center" />
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/footSteps"
+                        android:textColor="#00FF00"
+                        android:textSize="16sp"
+                        android:gravity="center" />
+
+                    <!-- Green/Red Beep Dot -->
+                    <View
+                        android:id="@+id/stepsBeepDot"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/circle_red"
+                        android:contentDescription="Steps Beep Dot" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -107,11 +123,12 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Map Panel with GPS Signal Bar -->
         <LinearLayout
             android:id="@+id/mapPanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="18dp"
             android:layout_marginTop="18dp"
             android:gravity="center"
@@ -120,15 +137,70 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp">
 
+            <!-- GPS Signal Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:background="@color/black">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GPS Signal: "
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <!-- GPS Signal Indicator -->
+                <View
+                    android:id="@+id/gpsSignalIndicator"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/circle_red"
+                    android:contentDescription="GPS Signal Indicator" />
+            </LinearLayout>
+
+            <!-- Map Fragment -->
             <fragment
                 android:id="@+id/mapFragment"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_weight="1"
                 android:name="com.google.android.gms.maps.SupportMapFragment"/>
         </LinearLayout>
 
-        <!-- Remaining content -->
+        <!-- Switches for Location and Step Tracking -->
+        <LinearLayout
+            android:id="@+id/switchPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/mapPanel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Switch
+                android:id="@+id/switchLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Track Location"
+                android:textSize="14sp" />
+
+            <Switch
+                android:id="@+id/switchSteps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Track Steps"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Remaining Content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,7 +209,7 @@
             android:padding="16dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            app:layout_constraintTop_toBottomOf="@id/mapPanel"
+            app:layout_constraintTop_toBottomOf="@id/switchPanel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -170,9 +242,6 @@
                     android:textColor="@color/gray"
                     android:textSize="12sp" />
             </LinearLayout>
-
-
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

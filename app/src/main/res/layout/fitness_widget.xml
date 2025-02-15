@@ -1,20 +1,105 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="center"
     style="@style/Widget.GYM_Workout.AppWidget.Container"
-    android:layout_width="200dp"
-    android:layout_height="150dp"
-    android:background="@android:color/transparent"
-    android:theme="@style/Theme.GYM_Workout.AppWidgetContainer">
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:theme="@style/Theme.GYM_Workout.AppWidgetContainer"
+    android:background="@drawable/widget_background"
+    android:padding="1dp">
 
-    <TextView
-        android:id="@+id/appwidget_text"
-        style="@style/Widget.GYM_Workout.AppWidget.InnerView"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/appwidget_text"
-        android:text=""
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/widget_image"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="1">
+
+        <!-- Steps Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="17dp">
+
+            <ImageView
+                android:id="@+id/steps_dot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="4dp"
+                android:background="@android:color/holo_orange_light" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="fill_vertical">
+
+                <TextView
+                    android:id="@+id/steps_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Steps"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/steps_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Calories Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/calories_dot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/holo_green_light" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="fill_vertical">
+
+                <TextView
+                    android:id="@+id/calories_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Calories"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/calories_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

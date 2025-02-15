@@ -134,6 +134,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return stepsCount
     }
 
+
     fun getRouteForDate(date: String): List<LatLng> {
         val db = readableDatabase
         ensureTablesExist(db)

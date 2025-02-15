@@ -83,4 +83,8 @@ dependencies {
     implementation (libs.androidx.recyclerview.v121)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
+
 }

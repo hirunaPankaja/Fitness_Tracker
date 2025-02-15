@@ -1,0 +1,8 @@
+<!-- res/drawable/donut_steps.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:innerRadiusRatio="3"
+    android:thicknessRatio="8"
+    android:useLevel="true">
+    <solid android:color="#FF0000" /> <!-- Replace with your desired color -->
+</shape>
