@@ -10,6 +10,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -25,10 +27,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gym_workout.database.DatabaseHelper2
-import com.example.gym_workout.database.DatabaseHelper2.Companion.COLUMN_DATE
-import com.example.gym_workout.database.DatabaseHelper2.Companion.COLUMN_LATITUDE
-import com.example.gym_workout.database.DatabaseHelper2.Companion.COLUMN_LONGITUDE
-import com.example.gym_workout.database.DatabaseHelper2.Companion.TABLE_ROUTE
 import com.example.gym_workout.utils.DateAdapter
 import com.example.gym_workout.utils.DateUtils
 import com.google.android.gms.location.*
@@ -52,6 +50,14 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
     private lateinit var footStepsTextView: TextView
+    private lateinit var caloriesTextView: TextView
+    private lateinit var distanceText: TextView
+    private lateinit var serviceManager: ServiceManager
+    private lateinit var switchLocation: Switch
+    private lateinit var switchSteps: Switch
+    private lateinit var stepsIndicator: View
+    private lateinit var gpsSignalIndicator: View
+    private var currentCalories = 0
 
     private lateinit var polylineOptions: PolylineOptions
     private lateinit var currentPolyline: Polyline
@@ -60,20 +66,17 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
     private lateinit var locationCallback: LocationCallback
 
     private lateinit var databaseHelper: DatabaseHelper2
-
     private lateinit var adapter: DateAdapter
-
-    private var viewingPastData = false
+    private var isViewingHistory = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         databaseHelper = DatabaseHelper2(requireContext())
+        serviceManager = ServiceManager(requireContext())
         arguments?.let {
             // Additional initialization code if needed
         }
         requestPermissions()
-
-        // Renew data at midnight
         renewDataAtMidnight()
     }
 
@@ -82,6 +85,35 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_activity, container, false)
+
+        // Initialize views
+        switchLocation = view.findViewById(R.id.switchLocation)
+        switchSteps = view.findViewById(R.id.switchSteps)
+        stepsIndicator = view.findViewById(R.id.stepsBeepDot)
+        gpsSignalIndicator = view.findViewById(R.id.gpsSignalIndicator)
+        footStepsTextView = view.findViewById(R.id.footSteps)
+        caloriesTextView = view.findViewById(R.id.calories_value)
+        distanceText = view.findViewById(R.id.distanceText)
+
+        // Restore switch states
+        switchSteps.isChecked = serviceManager.isStepsServiceEnabled()
+        switchLocation.isChecked = serviceManager.isLocationServiceEnabled()
+
+        // Restore indicator states
+        serviceManager.restoreState(stepsIndicator, gpsSignalIndicator)
+
+        // Set up switch listeners
+        switchSteps.setOnCheckedChangeListener { _, isChecked ->
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                serviceManager.toggleStepsService(isChecked, stepsIndicator)
+            }
+        }
+
+        switchLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                serviceManager.toggleLocationService(isChecked, gpsSignalIndicator)
+            }
+        }
 
         val dateRecyclerView: RecyclerView = view.findViewById(R.id.dateRecyclerView)
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -94,6 +126,12 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         adapter = DateAdapter(dates, this)
         dateRecyclerView.adapter = adapter
 
+        // Auto-select current date
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        Handler(Looper.getMainLooper()).postDelayed({
+            loadDataForDate(currentDate)
+        }, 500)
+
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -104,7 +142,6 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
             startActivity(intent)
         }
 
-        footStepsTextView = view.findViewById(R.id.footSteps)
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
@@ -115,11 +152,45 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        setupLocationCallback()
 
-        // Initialize locationCallback here
+        return view
+    }
+
+    private fun calculateCaloriesFromSteps(steps: Int): Int {
+        val caloriesPerStep = 0.04
+        return (steps * caloriesPerStep).toInt()
+    }
+
+    private fun calculateCaloriesFromDistance(distanceKm: Double): Int {
+        val caloriesPerKm = 60
+        return (distanceKm * caloriesPerKm).toInt()
+    }
+
+    private fun updateCaloriesDisplay(calories: Int) {
+        caloriesTextView.text = "$calories kcal"
+    }
+
+    private fun calculateAndUpdateCalories(steps: Int, route: List<LatLng>) {
+        var totalDistance = 0.0
+        for (i in 0 until route.size - 1) {
+            totalDistance += calculateDistance(route[i], route[i + 1])
+        }
+
+        val caloriesFromSteps = calculateCaloriesFromSteps(steps)
+        val caloriesFromDistance = calculateCaloriesFromDistance(totalDistance)
+
+        val totalCalories = maxOf(caloriesFromSteps, caloriesFromDistance)
+
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        databaseHelper.saveCalories(currentDate, totalCalories)
+        updateCaloriesDisplay(totalCalories)
+    }
+
+    private fun setupLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                if (!viewingPastData) {
+                if (!isViewingHistory && serviceManager.isLocationServiceEnabled()) {
                     locationResult ?: return
                     for (location in locationResult.locations) {
                         val currentLatLng = LatLng(location.latitude, location.longitude)
@@ -128,17 +199,50 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
                         currentPolyline.points = points
 
                         saveRouteCoordinate(currentLatLng)
+                        updateDistanceDisplay(points)
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15.0f))
-
-                        Log.d("LocationUpdate", "Location: ${location.latitude}, ${location.longitude}")
                     }
                 }
             }
         }
-
-        return view
     }
 
+    private fun loadDataForDate(date: String) {
+        val (steps, calories) = databaseHelper.getStepsAndCaloriesForDate(date)
+        updateStepCount(steps)
+        updateCaloriesDisplay(calories)
+
+        val route = getRouteForDate(date)
+        if (route.isNotEmpty()) {
+            showRouteOnMap(route)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.first(), 15.0f))
+            updateDistanceDisplay(route)
+        } else {
+            currentPolyline.points = emptyList()
+            distanceText.text = "Distance: 0.0 km"
+        }
+    }
+
+    private fun updateDistanceDisplay(route: List<LatLng>) {
+        var totalDistance = 0.0
+        for (i in 0 until route.size - 1) {
+            totalDistance += calculateDistance(route[i], route[i + 1])
+        }
+        distanceText.text = String.format("Distance: %.2f km", totalDistance)
+
+        val currentSteps = footStepsTextView.text.toString().toIntOrNull() ?: 0
+        calculateAndUpdateCalories(currentSteps, route)
+    }
+
+    private fun calculateDistance(start: LatLng, end: LatLng): Double {
+        val results = FloatArray(1)
+        Location.distanceBetween(
+            start.latitude, start.longitude,
+            end.latitude, end.longitude,
+            results
+        )
+        return results[0].toDouble() / 1000
+    }
 
     private fun renewDataAtMidnight() {
         val calendar = Calendar.getInstance()
@@ -155,6 +259,8 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
             previousTotalSteps = 0f
             currentPolyline.points.clear()
             footStepsTextView.text = "0"
+            caloriesTextView.text = "0 kcal"
+            distanceText.text = "Distance: 0.0 km"
             val newDates = DateUtils().generateDates(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR))
             adapter.updateDates(newDates)
             renewDataAtMidnight()
@@ -171,25 +277,25 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
     }
 
     override fun onDateClick(date: String) {
-        // Format the date to ensure it matches the database format
-        val formattedDate = formatToDatabaseDate(date)
-        val stepsCount = databaseHelper.getStepsCountForDate(formattedDate)
-        updateStepCount(stepsCount)
-
-        val route = getRouteForDate(formattedDate)
-        if (route.isEmpty()) {
-            Toast.makeText(context, "No route data available for this date", Toast.LENGTH_SHORT).show()
-            currentPolyline.points.clear()
-        } else {
-            showRouteOnMap(route)
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.first(), 15.0f))
+        isViewingHistory = true
+        if (::mMap.isInitialized) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            mMap.isMyLocationEnabled = false
         }
 
-        // Disable real-time updates when viewing past data
-        viewingPastData = true
+        val formattedDate = formatToDatabaseDate(date)
+        loadDataForDate(formattedDate)
     }
 
-    // Helper function to format the date to "yyyy-MM-dd"
     private fun formatToDatabaseDate(date: String): String {
         return try {
             val inputFormat = SimpleDateFormat("yyyy-MM-d", Locale.getDefault())
@@ -206,7 +312,6 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         currentPolyline.points = route
     }
 
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
@@ -217,24 +322,39 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            mMap.isMyLocationEnabled = true
+            mMap.isMyLocationEnabled = !isViewingHistory
             setupLocationUpdates()
-        } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                LOCATION_PERMISSION_REQUEST_CODE
+        }
+
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        loadDataForDate(currentDate)
+    }
+
+    private fun setupLocationUpdates() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = 5000
+            fastestInterval = 2000
+            priority = Priority.PRIORITY_HIGH_ACCURACY
+        }
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
             )
         }
     }
+
+
+
+
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -247,48 +367,6 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         )
     }
 
-    private fun setupLocationUpdates() {
-        val locationRequest = LocationRequest.create().apply {
-            interval = 5000
-            fastestInterval = 2000
-            priority = Priority.PRIORITY_HIGH_ACCURACY
-        }
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                if (!viewingPastData) {
-                    locationResult ?: return
-                    for (location in locationResult.locations) {
-                        val currentLatLng = LatLng(location.latitude, location.longitude)
-                        val points = currentPolyline.points
-                        points.add(currentLatLng)
-                        currentPolyline.points = points
-
-                        saveRouteCoordinate(currentLatLng)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15.0f))
-
-                        Log.d("LocationUpdate", "Location: ${location.latitude}, ${location.longitude}")
-                    }
-                }
-            }
-        }
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.getMainLooper()
-            )
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -299,12 +377,9 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
                 if (ActivityCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    mMap.isMyLocationEnabled = true
+                    mMap.isMyLocationEnabled = !isViewingHistory
                     setupLocationUpdates()
                 }
             } else {
@@ -314,26 +389,26 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event == null) return
-
-        if (event.sensor.type == Sensor.TYPE_STEP_COUNTER) {
+        if (event?.sensor?.type == Sensor.TYPE_STEP_COUNTER && !isViewingHistory && serviceManager.isStepsServiceEnabled()) {
             if (previousTotalSteps == 0f) {
                 previousTotalSteps = event.values[0]
             }
             totalSteps = event.values[0]
             val currentSteps = (totalSteps - previousTotalSteps).toInt()
             updateStepCount(currentSteps)
+
             val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
             databaseHelper.saveStepsCount(currentDate, currentSteps)
         }
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // Handle changes in sensor accuracy if needed
+    }
 
     private fun updateStepCount(steps: Int) {
         footStepsTextView.text = steps.toString()
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -341,24 +416,21 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-
     override fun onResume() {
         super.onResume()
-        if (stepCounter != null) {
+        if (stepCounter != null && serviceManager.isStepsServiceEnabled()) {
             sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI)
         }
-        if (::mMap.isInitialized && ActivityCompat.checkSelfPermission(
+        if (::mMap.isInitialized && serviceManager.isLocationServiceEnabled() &&
+            ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
+            mMap.isMyLocationEnabled = !isViewingHistory
             setupLocationUpdates()
         }
     }
-
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -372,4 +444,3 @@ class Activity : Fragment(), DateAdapter.OnDateClickListener, OnMapReadyCallback
             }
     }
 }
-

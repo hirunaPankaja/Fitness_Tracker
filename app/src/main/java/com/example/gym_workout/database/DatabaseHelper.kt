@@ -60,10 +60,31 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             db.execSQL("ALTER TABLE $TABLE_USERS ADD COLUMN $COLUMN_EMAIL TEXT")
         }
     }
-
-    /**
-     * Save or update user data
-     */
+    fun isDatabaseCreated(): Boolean {
+        val db = readableDatabase
+        return try {
+            val cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='$TABLE_USERS'", null)
+            cursor.use {
+                it.moveToFirst()
+            }
+        } catch (e: Exception) {
+            false
+        } finally {
+            db.close()
+        }
+    }
+    fun isUserRegistered(): Boolean {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_USERS WHERE $COLUMN_USER_ID = 'user1'", null)
+        cursor.use {
+            if (it.moveToFirst()) {
+                val count = it.getInt(0)
+                return count > 0
+            }
+        }
+        db.close()
+        return false
+    }
     fun saveOrUpdateStepData(data: ContentValues, userId: String): Boolean {
         val db = writableDatabase
 

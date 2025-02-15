@@ -24,7 +24,6 @@ class DataManager(private val context: Context) {
                 firstName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FIRST_NAME)),
                 lastName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LAST_NAME)),
                 dateOfBirth = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DATE_OF_BIRTH)),
-                email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_EMAIL)),
                 gender = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_GENDER)),
                 height = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_HEIGHT)),
                 reasonForWeightGain = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_REASON_FOR_WEIGHT_GAIN)),
@@ -34,7 +33,6 @@ class DataManager(private val context: Context) {
                 dailyWorkingTime = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_DAILY_WORKING_TIME)),
                 fitnessLevel = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FITNESS_LEVEL)),
                 profileImagePath = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_IMAGE_PATH)),
-                password = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PASSWORD)),
                 stepCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_STEP_COMPLETED))
             )
             Log.d("DataManager", "User data retrieved: $userData")

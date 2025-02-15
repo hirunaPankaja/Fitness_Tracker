@@ -51,4 +51,9 @@
     <string name="running_animation_button">running animation button</string>
     <string name="walking_tracker">Walking Tracker</string>
 
+    <string name="vegan">Vegan</string>
+    <string name="non_vegetarian">Non Vegetarian</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="choose_your_preferred_diet_plan">CHOOSE YOUR PREFERRED DIET PLAN</string>
+
 </resources>

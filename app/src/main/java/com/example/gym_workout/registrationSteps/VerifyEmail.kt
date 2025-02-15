@@ -17,7 +17,7 @@ import javax.mail.internet.*
 import kotlin.random.Random
 import kotlin.concurrent.thread
 
-class VerifyEmail : AppCompatActivity() {
+class erifyEmail : AppCompatActivity() {
 
     private lateinit var dbHelper: DatabaseHelper
 
