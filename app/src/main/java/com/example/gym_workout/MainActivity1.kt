@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import com.example.gym_workout.database.DatabaseHelper2
 import com.example.gym_workout.databinding.ActivityMain1Binding
 
 class MainActivity1 : AppCompatActivity() {
@@ -16,6 +17,8 @@ class MainActivity1 : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val dbHelper = DatabaseHelper2(this)
+        dbHelper.readableDatabase
         super.onCreate(savedInstanceState)
         sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
         val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)

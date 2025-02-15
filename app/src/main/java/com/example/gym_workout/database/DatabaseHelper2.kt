@@ -25,27 +25,15 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         const val COLUMN_LONGITUDE = "longitude"
     }
 
+    init {
+        // Ensure tables are created if they don't exist
+        val db = writableDatabase
+        createTablesIfNotExist(db)
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         Log.d("DatabaseHelper2", "Creating database tables")
-
-        val createActivityTableQuery = """
-            CREATE TABLE IF NOT EXISTS $TABLE_ACTIVITY (
-                $COLUMN_DATE DATE PRIMARY KEY,
-                $COLUMN_STEPS_COUNT INTEGER DEFAULT 0,
-                $COLUMN_CALORIES INTEGER DEFAULT 0
-            )
-        """
-        db.execSQL(createActivityTableQuery)
-
-        val createRouteTableQuery = """
-            CREATE TABLE IF NOT EXISTS $TABLE_ROUTE (
-                $COLUMN_DATE DATE,
-                $COLUMN_LATITUDE REAL,
-                $COLUMN_LONGITUDE REAL
-            )
-        """
-        db.execSQL(createRouteTableQuery)
-        Log.d("DatabaseHelper2", "Tables created successfully")
+        createTablesIfNotExist(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -53,6 +41,39 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE $TABLE_ACTIVITY ADD COLUMN $COLUMN_CALORIES INTEGER DEFAULT 0")
         }
+        createTablesIfNotExist(db)
+    }
+
+    private fun createTablesIfNotExist(db: SQLiteDatabase) {
+        if (!isTableExists(db, TABLE_ACTIVITY)) {
+            val createActivityTableQuery = """
+                CREATE TABLE IF NOT EXISTS $TABLE_ACTIVITY (
+                    $COLUMN_DATE DATE PRIMARY KEY,
+                    $COLUMN_STEPS_COUNT INTEGER DEFAULT 0,
+                    $COLUMN_CALORIES INTEGER DEFAULT 0
+                )
+            """
+            db.execSQL(createActivityTableQuery)
+        }
+
+        if (!isTableExists(db, TABLE_ROUTE)) {
+            val createRouteTableQuery = """
+                CREATE TABLE IF NOT EXISTS $TABLE_ROUTE (
+                    $COLUMN_DATE DATE,
+                    $COLUMN_LATITUDE REAL,
+                    $COLUMN_LONGITUDE REAL
+                )
+            """
+            db.execSQL(createRouteTableQuery)
+        }
+        Log.d("DatabaseHelper2", "Tables created successfully")
+    }
+
+    private fun isTableExists(db: SQLiteDatabase, tableName: String): Boolean {
+        val cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'", null)
+        val exists = cursor.moveToFirst()
+        cursor.close()
+        return exists
     }
 
     // Method to save steps count
@@ -72,7 +93,6 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         }
     }
 
-
     // Method to save calories (only updates the calories column)
     fun saveCalories(date: String, calories: Int): Boolean {
         val db = writableDatabase
@@ -90,6 +110,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             db.close()
         }
     }
+
     // Helper method to ensure a record exists for the given date
     private fun ensureDateRecordExists(db: SQLiteDatabase, date: String) {
         val cursor = db.query(
@@ -145,6 +166,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     // Method to save route coordinates
     fun saveRouteCoordinate(date: String, latitude: Double, longitude: Double): Boolean {
         val db = writableDatabase
+        createTablesIfNotExist(db) // Ensure the tables exist before inserting
         val contentValues = ContentValues().apply {
             put(COLUMN_DATE, date)
             put(COLUMN_LATITUDE, latitude)
@@ -156,6 +178,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     // Method to get route coordinates for a specific date
     fun getRouteForDate(date: String): List<LatLng> {
         val db = readableDatabase
+        createTablesIfNotExist(db) // Ensure the tables exist before querying
         val cursor = db.query(
             TABLE_ROUTE,
             arrayOf(COLUMN_LATITUDE, COLUMN_LONGITUDE),
@@ -177,6 +200,7 @@ class DatabaseHelper2(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     // Method to clear data from the previous month
     fun clearPreviousMonthData(): Boolean {
         val db = writableDatabase
+        createTablesIfNotExist(db) // Ensure the tables exist before deleting
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val firstDayOfMonth = currentDate.substring(0, 8) + "01"
 
