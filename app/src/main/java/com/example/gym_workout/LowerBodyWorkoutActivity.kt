@@ -2,9 +2,10 @@ package com.example.gym_workout
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.View
 import android.util.Log
+import android.view.View
 import android.content.Intent
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,9 @@ class LowerBodyWorkoutActivity : AppCompatActivity() {
 
     private lateinit var dbHelper: DatabaseHelperWorkout
     private lateinit var binding: LowerbodyworkoutActivityBinding
+    private val completedWorkouts = mutableSetOf<String>() // Track completed workouts
+    private var totalCaloriesBurned = 0
+    private var totalDuration = 0 // in minutes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,20 @@ class LowerBodyWorkoutActivity : AppCompatActivity() {
         binding.imgLunges.setOnClickListener { onCardClick(it) }
         binding.imgStepUps.setOnClickListener { onCardClick(it) }
         binding.imgCalfRaises.setOnClickListener { onCardClick(it) }
+
+        binding.btnStartSession.setOnClickListener { onStartWorkoutClick(it) }
+        binding.btnBack.setOnClickListener { onBackClick(it) }
+
+        // Check for completed workouts
+        val completedArray = intent.getStringArrayExtra("completedWorkouts") ?: arrayOf()
+        completedWorkouts.addAll(completedArray.asList())
+
+        // Check completed workouts and update UI
+        checkCompletedWorkouts()
+    }
+
+    private fun onBackClick(view: View) {
+        finish()
     }
 
     private fun insertExerciseData() {
@@ -87,6 +105,43 @@ class LowerBodyWorkoutActivity : AppCompatActivity() {
         )
     }
 
+    private fun checkCompletedWorkouts() {
+        // Iterate over completed workouts and update UI
+        if (completedWorkouts.contains("BodyweightSquats")) {
+            binding.root.findViewById<ImageView>(R.id.imgSquats).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("GluteBridges")) {
+            binding.root.findViewById<ImageView>(R.id.imggluteBridges).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("Lunges")) {
+            binding.root.findViewById<ImageView>(R.id.imgLunges).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("StepUps")) {
+            binding.root.findViewById<ImageView>(R.id.imgStepUps).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("CalfRaises")) {
+            binding.root.findViewById<ImageView>(R.id.imgCalfRaises).visibility = View.VISIBLE
+        }
+
+        // Check if all workouts are completed
+        if (completedWorkouts.containsAll(listOf("BodyweightSquats", "GluteBridges", "Lunges", "StepUps", "CalfRaises"))) {
+            Log.d("LowerBodyWorkoutActivity", "All workouts completed. Showing popup.")
+            showCompletionPopup()
+        } else {
+            Log.d("LowerBodyWorkoutActivity", "Workouts not completed yet.")
+        }
+    }
+
+    private fun showCompletionPopup() {
+        val popupDialog = Popupworkoutcomplete(this, totalCaloriesBurned, totalDuration)
+        popupDialog.setOnDismissListener {
+            // Return to the main screen when the popup is dismissed
+            val intent = Intent(this, LowerBodyWorkoutActivity::class.java)
+            startActivity(intent)
+        }
+        popupDialog.show()
+    }
+
     fun onCardClick(view: View) {
         Log.d("LowerBodyWorkoutActivity", "Card clicked: ${view.id}")
 
@@ -113,10 +168,97 @@ class LowerBodyWorkoutActivity : AppCompatActivity() {
             intent.putExtra("title", exercise.title)
             intent.putExtra("instructions", exercise.instructions)
             intent.putExtra("repsSets", exercise.repsSets)
-            intent.putExtra("exerciseName", exercise.name) // For fetching image
-            startActivity(intent)
+            intent.putExtra("exerciseName", exercise.name)
+            intent.putExtra("completedWorkouts", completedWorkouts.toTypedArray())
+            intent.putExtra("totalCaloriesBurned", totalCaloriesBurned) // Pass total calories burned
+            intent.putExtra("totalDuration", totalDuration) // Pass total duration
+            startActivityForResult(intent, REQUEST_CODE)
         } else {
             Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun onStartWorkoutClick(view: View) {
+        Log.d("LowerBodyWorkoutActivity", "Start Workout button clicked")
+        Toast.makeText(this, "Workout Started!", Toast.LENGTH_SHORT).show()
+
+        // Define the list of exercises for the session
+        val exercises = listOf("BodyweightSquats", "GluteBridges", "Lunges", "StepUps", "CalfRaises")
+
+        // Start the first exercise
+        startExercise(exercises, 0)
+    }
+
+    private fun startExercise(exercises: List<String>, currentIndex: Int) {
+        if (currentIndex < exercises.size) {
+            val exercise = dbHelper.getExercise(exercises[currentIndex])
+            if (exercise != null) {
+                totalCaloriesBurned += getCaloriesBurned(exercise.name)
+                totalDuration += getDuration(exercise.name)
+
+                val intent = Intent(this, Workout::class.java)
+                intent.putExtra("title", exercise.title)
+                intent.putExtra("instructions", exercise.instructions)
+                intent.putExtra("repsSets", exercise.repsSets)
+                intent.putExtra("exerciseName", exercise.name)
+                intent.putExtra("exercises", exercises.toTypedArray())
+                intent.putExtra("currentIndex", currentIndex)
+                intent.putExtra("completedWorkouts", completedWorkouts.toTypedArray())
+                intent.putExtra("totalCaloriesBurned", totalCaloriesBurned) // Pass total calories burned
+                intent.putExtra("totalDuration", totalDuration) // Pass total duration
+                startActivityForResult(intent, REQUEST_CODE)
+            } else {
+                Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            // All workouts completed, show completion popup
+            Log.d("LowerBodyWorkoutActivity", "All exercises completed. Showing popup.")
+            showCompletionPopup()
+        }
+    }
+
+    private fun getCaloriesBurned(exerciseName: String): Int {
+        return when (exerciseName) {
+            "BodyweightSquats" -> 60
+            "GluteBridges" -> 40
+            "Lunges" -> 50
+            "StepUps" -> 45
+            "CalfRaises" -> 30
+            else -> 0
+        }
+    }
+
+    private fun getDuration(exerciseName: String): Int {
+        return when (exerciseName) {
+            "BodyweightSquats" -> 12
+            "GluteBridges" -> 10
+            "Lunges" -> 8
+            "StepUps" -> 10
+            "CalfRaises" -> 7
+            else -> 0
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            val completedArray = data?.getStringArrayExtra("completedWorkouts") ?: arrayOf()
+            completedWorkouts.addAll(completedArray.asList())
+
+            val currentIndex = data?.getIntExtra("currentIndex", -1) ?: -1
+            val exercises = data?.getStringArrayExtra("exercises")?.toList() ?: emptyList()
+            totalCaloriesBurned = data?.getIntExtra("totalCaloriesBurned", 0) ?: 0
+            totalDuration = data?.getIntExtra("totalDuration", 0) ?: 0
+
+            if (currentIndex != -1) {
+                startExercise(exercises, currentIndex + 1)
+            } else {
+                checkCompletedWorkouts()
+            }
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE = 1
     }
 }

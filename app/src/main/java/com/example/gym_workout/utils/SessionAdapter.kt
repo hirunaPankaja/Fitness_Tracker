@@ -7,6 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
+import com.example.gym_workout.LowerBodyWorkoutActivity
+import com.example.gym_workout.R
+import com.example.gym_workout.UpperBodyWorkoutActivity
+import com.example.gym_workout.YogaActivity
+import com.example.gym_workout.fullbodyworkout_activity
+
 import com.example.gym_workout.JogRunning
 import com.example.gym_workout.JogWalking
 import com.example.gym_workout.LowerBodyWorkoutActivity
@@ -57,12 +64,21 @@ class SessionAdapter(private val sessionItems: MutableList<SessionItem>) :
                         val intent = Intent(itemView.context, LowerBodyWorkoutActivity::class.java)
                         itemView.context.startActivity(intent)
                     }
+
+                    "Yoga" -> {
+                        val intent = Intent(itemView.context, YogaActivity::class.java)
+                        itemView.context.startActivity(intent)
+                    }
+                    "Full Body" -> {
+                        val intent = Intent(itemView.context, fullbodyworkout_activity::class.java)
+
                     "Running" -> {
                         val intent = Intent(itemView.context, JogRunning::class.java)
                         itemView.context.startActivity(intent)
                     }
                     "Walking" -> {
                         val intent = Intent(itemView.context, JogWalking::class.java)
+
                         itemView.context.startActivity(intent)
                     }
                 }

@@ -7,11 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
+import com.example.gym_workout.database.DataManager
+import com.example.gym_workout.utils.HomeViewModel
 import com.example.gym_workout.databinding.FragmentHomeBinding
 import com.example.gym_workout.database.DatabaseHelper2
+
 import com.example.gym_workout.utils.SessionAdapter
 import com.example.gym_workout.utils.SessionItem
 import java.text.SimpleDateFormat
@@ -25,16 +31,20 @@ class Home : Fragment() {
     private lateinit var yogaLayout: LinearLayout
     private lateinit var cyclingLayout: LinearLayout
     private lateinit var workoutLayout: LinearLayout
+    private lateinit var viewModel: HomeViewModel
     private lateinit var footstepsCountsTextView: TextView
     private lateinit var caloriesCountsTextView: TextView
     private lateinit var databaseHelper: DatabaseHelper2
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
 
         // Initialize DatabaseHelper
         databaseHelper = DatabaseHelper2(requireContext())
@@ -51,45 +61,80 @@ class Home : Fragment() {
         footstepsCountsTextView.text = "$stepsCount steps"
 
         // Initialize RecyclerView
+
         sessionRecyclerView = view.findViewById(R.id.session_viewer)
         sessionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         sessionAdapter = SessionAdapter(mutableListOf())
         sessionRecyclerView.adapter = sessionAdapter
 
-        // Initialize program layouts
         jogLayout = view.findViewById(R.id.jog)
         yogaLayout = view.findViewById(R.id.yoga)
         cyclingLayout = view.findViewById(R.id.cycling)
         workoutLayout = view.findViewById(R.id.workout)
 
-        // Set click listeners
         jogLayout.setOnClickListener {
-            updateRecyclerView(getJogSessions())
+            viewModel.updateSessions("jog")
             updateSelectedBackground(jogLayout)
         }
 
         yogaLayout.setOnClickListener {
-            updateRecyclerView(getYogaSessions())
+            viewModel.updateSessions("yoga")
             updateSelectedBackground(yogaLayout)
         }
 
         cyclingLayout.setOnClickListener {
-            updateRecyclerView(getCyclingSessions())
+            viewModel.updateSessions("cycling")
             updateSelectedBackground(cyclingLayout)
         }
 
         workoutLayout.setOnClickListener {
-            updateRecyclerView(getWorkoutSessions())
+            viewModel.updateSessions("workout")
             updateSelectedBackground(workoutLayout)
 
         }
 
-        // Default selection
-        updateRecyclerView(getJogSessions())
-        updateSelectedBackground(jogLayout)
+        // Observe the LiveData from ViewModel
+        viewModel.sessions.observe(viewLifecycleOwner, Observer {
+            sessionAdapter.updateData(it)
+        })
+
+        // Load user goal and set the default selection
+        loadUserGoalAndSetDefaultSelection()
 
         return view
     }
+
+
+    private fun loadUserGoalAndSetDefaultSelection() {
+        val user = DataManager(requireContext()).getUserData()
+        if (user != null) {
+            val goal = user.goal
+            Log.d("HomeFragment", "User goal: $goal")
+            when (goal.trim()) {
+                "Loose Weight" -> {
+                    viewModel.updateSessions("Loose Weight")
+                    updateSelectedBackground(workoutLayout)
+                    Log.d("HomeFragment", "Displaying Fat Loss Workout Sessions")
+                }
+                "MuscleGain" -> {
+                    viewModel.updateSessions("muscleGain")
+                    updateSelectedBackground(workoutLayout)
+                    Log.d("HomeFragment", "Displaying Muscle Gain Workout Sessions")
+                }
+                else -> {
+                    viewModel.updateSessions("workout")
+                    updateSelectedBackground(workoutLayout)
+                    Log.d("HomeFragment", "Displaying all workout sessions")
+                }
+            }
+        } else {
+            viewModel.updateSessions("jog")
+            updateSelectedBackground(jogLayout)
+            Log.d("HomeFragment", "No user data found, displaying Jog Sessions")
+        }
+
+    private fun getStepsCountForDate(date: String): Int {
+        return databaseHelper.getStepsCountForDate(date)
 
     private fun getStepsAndCalories(date: String): Pair<Int, Int> {
         return try {
@@ -98,21 +143,23 @@ class Home : Fragment() {
             Log.e("Activity", "Error fetching steps and calories: ${e.message}")
             Pair(0, 0)
         }
+
     }
     private fun updateRecyclerView(sessionItems: List<SessionItem>) {
         sessionAdapter.updateData(sessionItems)
+
     }
 
     private fun updateSelectedBackground(selectedLayout: LinearLayout) {
-        // Reset all backgrounds
         jogLayout.setBackgroundResource(R.drawable.background_square)
         yogaLayout.setBackgroundResource(R.drawable.background_square)
         cyclingLayout.setBackgroundResource(R.drawable.background_square)
         workoutLayout.setBackgroundResource(R.drawable.background_square)
 
-        // Set selected background
         selectedLayout.setBackgroundResource(R.drawable.highlight_square)
     }
+
+
 
     private fun getJogSessions(): List<SessionItem> {
         return listOf(

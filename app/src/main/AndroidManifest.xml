@@ -19,7 +19,8 @@
         android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
@@ -38,9 +39,16 @@
         tools:replace="android:allowBackup, android:label"
         tools:targetApi="31">
         <activity
+
+
+            android:name=".Popupworkoutcomplete"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+
             android:name=".MealDetailsOverlayActivity"
             android:exported="false" />
         <activity
+
             android:name=".JogMapWalkingActivity"
             android:exported="false" />
         <activity
@@ -52,6 +60,7 @@
         <activity
             android:name=".JogRunning"
             android:exported="false" />
+
 
         <receiver
             android:name=".newW"
@@ -73,7 +82,10 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
+
+                android:resource="@xml/gym_workout_widget_info" />
                 android:resource="@xml/fitness_widget_info" />
+
         </receiver>
 
         <activity
@@ -137,15 +149,36 @@
             android:name=".Workout"
             android:exported="true" />
         <activity
-            android:name=".step1"
+
+            android:name=".LowerBodyWorkoutActivity"
             android:exported="true" />
         <activity
             android:name=".Setting"
+
+            android:name=".step1"
+
             android:exported="true" />
+        <activity
+            android:name=".UpperBodyWorkoutActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".YogaActivity"
+            android:exported="true" />
+        <activity
+            android:name=".fullbodyworkout_activity"
+            android:exported="true" />
+        <activity
+            android:name=".step1"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity1"
+
 
         <!-- Add the LauncherActivity to handle navigation -->
         <activity
             android:name=".utils.LauncherActivity"
+
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
