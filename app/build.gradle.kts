@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.identity.jvm)
     implementation(libs.androidx.recyclerview)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.firebase.inappmessaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,6 +81,8 @@ dependencies {
     implementation(libs.play.services.maps.v1802)
     implementation(libs.play.services.location.v1800)
     implementation (libs.androidx.recyclerview.v121)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.glide)
     annotationProcessor (libs.compiler)
 

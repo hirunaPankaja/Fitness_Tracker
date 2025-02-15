@@ -7,6 +7,8 @@
     android:background="@color/black"
     tools:context=".Workout">
 
+
+
     <!-- Overlay to dim background image -->
     <View
         android:layout_width="match_parent"
@@ -14,6 +16,21 @@
         android:background="@color/black"
         android:alpha="0.6"
         tools:ignore="MissingConstraints" />
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/back"
+        android:background="@color/black"
+        android:onClick="onBackClick"
+        android:src="@drawable/white_arrow"
+        tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
 
     <!-- Illustration Image -->
     <ImageView
@@ -27,7 +44,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:background="#FF0000"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="42dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintHorizontal_bias="0.5" />
@@ -44,6 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewIllustration"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -144,12 +162,15 @@
         android:id="@+id/resetButton"
         android:layout_width="90dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="300dp"
+        android:layout_marginStart="300dp"
         android:layout_marginTop="21dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/red"
         android:text="Reset"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewInstructions" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewInstructions"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
