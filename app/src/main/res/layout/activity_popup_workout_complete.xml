@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/popup_background">
+
+    <TextView
+        android:id="@+id/tvCongratulations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Congratulations!"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvMessage"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="You've completed all upper body workouts."
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvCongratulations"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvCaloriesBurned"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvCaloriesBurned"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Total Calories Burned: "
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvTotalDuration"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvTotalDuration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Total Duration: "
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvCaloriesBurned"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnOk"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:textColor="@android:color/white"
+        android:background="@color/color_primary"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalDuration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center" />
+</androidx.constraintlayout.widget.ConstraintLayout>

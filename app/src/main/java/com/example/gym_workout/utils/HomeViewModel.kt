@@ -21,11 +21,18 @@ class HomeViewModel : ViewModel() {
             "cycling" -> listOf(
                 SessionItem("Cycling", "Cardio", R.drawable.cycling)
             )
-            "workout" -> listOf(
-                SessionItem("Lower Body", "Legs & Glutes", R.drawable.lower_body),
-                SessionItem("Upper Body", "Arms & Shoulders", R.drawable.upper_body)
+            "Loose Weight" -> listOf(
+                SessionItem("Full Body (Fat Loss)", "45 mins", R.drawable.fullbody)
             )
-            else -> emptyList()
+            "MuscleGain" -> listOf(
+                SessionItem("Upper Body (Muscle Gain)", "30 mins", R.drawable.upper_body),
+                SessionItem("Lower Body (Muscle Gain)", "30 mins", R.drawable.lower_body)
+            )
+            else -> listOf(
+                SessionItem("Upper Body", "Arms & Shoulders", R.drawable.upper_body),
+                SessionItem("Lower Body", "Legs & Glutes", R.drawable.lower_body),
+                SessionItem("Full Body", "Full body", R.drawable.fullbody)
+            )
         }
     }
 }

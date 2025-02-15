@@ -2,9 +2,10 @@ package com.example.gym_workout
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.View
 import android.util.Log
+import android.view.View
 import android.content.Intent
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,8 @@ class YogaActivity : AppCompatActivity() {
 
     private lateinit var dbHelper: DatabaseHelperWorkout
     private lateinit var binding: YogaActivityBinding
+    private val completedWorkouts = mutableListOf<String>() // Track completed workouts
+    private var totalCaloriesBurned = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,20 @@ class YogaActivity : AppCompatActivity() {
         binding.imgSeatedForwardBend.setOnClickListener { onCardClick(it) }
         binding.imgBridgePose.setOnClickListener { onCardClick(it) }
         binding.imgCorpsePose.setOnClickListener { onCardClick(it) }
+
+        binding.btnStartSession.setOnClickListener { onStartWorkoutClick(it) }
+        binding.btnBack.setOnClickListener { onBackClick(it) }
+
+        // Check for completed workouts
+        val completedArray = intent.getStringArrayExtra("completedWorkouts") ?: arrayOf()
+        completedWorkouts.addAll(completedArray.asList())
+
+        // Check completed workouts and update UI
+        checkCompletedWorkouts()
+    }
+
+    private fun onBackClick(view: View) {
+        finish()
     }
 
     private fun insertYogaPoseData() {
@@ -115,9 +132,56 @@ class YogaActivity : AppCompatActivity() {
             "CorpsePose",
             "Corpse Pose (Savasana)",
             "1. Lie flat on your back with your arms at your sides, palms facing up.\n2. Let your feet fall naturally outward.\n3. Close your eyes, relax your entire body, and focus on your breath.\n4. Stay in this position to calm your mind and body.",
-            "Hold for 2–5 minutes",
+            "Hold for 1 min",
             corpsePoseImage
         )
+    }
+
+
+    private fun checkCompletedWorkouts() {
+        // Iterate over completed workouts and update UI
+        if (completedWorkouts.contains("ChildPose")) {
+            binding.root.findViewById<ImageView>(R.id.imgChildPose).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("DownwardDog")) {
+            binding.root.findViewById<ImageView>(R.id.imgDownwardDog).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("CatCowPose")) {
+            binding.root.findViewById<ImageView>(R.id.imgCatCowPose).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("WarriorIIPose")) {
+            binding.root.findViewById<ImageView>(R.id.imgWarriorIIPose).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("CobraPose")) {
+            binding.root.findViewById<ImageView>(R.id.imgCobraPose).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("SeatedForwardBend")) {
+            binding.root.findViewById<ImageView>(R.id.imgSeatedForwardBend).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("BridgePose")) {
+            binding.root.findViewById<ImageView>(R.id.imgBridgePose).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("CorpsePose")) {
+            binding.root.findViewById<ImageView>(R.id.imgCorpsePose).visibility = View.VISIBLE
+        }
+
+        // Check if all workouts are completed
+        if (completedWorkouts.containsAll(listOf("ChildPose", "DownwardDog", "CatCowPose", "WarriorIIPose", "CobraPose", "SeatedForwardBend", "BridgePose", "CorpsePose"))) {
+            Log.d("YogaActivity", "All workouts completed. Showing popup.")
+            showCompletionPopup()
+        } else {
+            Log.d("YogaActivity", "Workouts not completed yet.")
+        }
+    }
+
+    private fun showCompletionPopup() {
+        val popupDialog = Popupworkoutcomplete(this, totalCaloriesBurned,totalCaloriesBurned)
+        popupDialog.setOnDismissListener {
+            // Return to the main screen when the popup is dismissed
+            val intent = Intent(this, YogaActivity::class.java)
+            startActivity(intent)
+        }
+        popupDialog.show()
     }
 
     fun onCardClick(view: View) {
@@ -149,14 +213,84 @@ class YogaActivity : AppCompatActivity() {
             intent.putExtra("title", exercise.title)
             intent.putExtra("instructions", exercise.instructions)
             intent.putExtra("repsSets", exercise.repsSets)
-            intent.putExtra("exerciseName", exercise.name) // For fetching image
-            startActivity(intent)
+            intent.putExtra("exerciseName", exercise.name)
+            intent.putExtra("completedWorkouts", completedWorkouts.toTypedArray())
+            intent.putExtra("totalCaloriesBurned", totalCaloriesBurned) // Pass total calories burned
+            startActivityForResult(intent, REQUEST_CODE)
         } else {
             Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun onBackClick(view: View) {
-        finish()
+    fun onStartWorkoutClick(view: View) {
+        Log.d("YogaActivity", "Start Workout button clicked")
+        Toast.makeText(this, "Workout Started!", Toast.LENGTH_SHORT).show()
+
+        // Define the list of exercises for the session
+        val exercises = listOf("ChildPose", "DownwardDog", "CatCowPose", "WarriorIIPose", "CobraPose", "SeatedForwardBend", "BridgePose", "CorpsePose")
+
+        // Start the first exercise
+        startExercise(exercises, 0)
+    }
+
+    private fun startExercise(exercises: List<String>, currentIndex: Int) {
+        if (currentIndex < exercises.size) {
+            val exercise = dbHelper.getExercise(exercises[currentIndex])
+            if (exercise != null) {
+                totalCaloriesBurned += getCaloriesBurned(exercise.name)
+
+                val intent = Intent(this, Workout::class.java)
+                intent.putExtra("title", exercise.title)
+                intent.putExtra("instructions", exercise.instructions)
+                intent.putExtra("repsSets", exercise.repsSets)
+                intent.putExtra("exerciseName", exercise.name)
+                intent.putExtra("exercises", exercises.toTypedArray())
+                intent.putExtra("currentIndex", currentIndex)
+                intent.putExtra("completedWorkouts", completedWorkouts.toTypedArray())
+                intent.putExtra("totalCaloriesBurned", totalCaloriesBurned) // Pass total calories burned
+                startActivityForResult(intent, REQUEST_CODE)
+            } else {
+                Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            // All workouts completed, show completion popup
+            Log.d("YogaActivity", "All exercises completed. Showing popup.")
+            showCompletionPopup()
+        }
+    }
+
+    private fun getCaloriesBurned(exerciseName: String): Int {
+        return when (exerciseName) {
+            "ChildPose" -> 10
+            "DownwardDog" -> 15
+            "CatCowPose" -> 10
+            "WarriorIIPose" -> 20
+            "CobraPose" -> 15
+            "SeatedForwardBend" -> 10
+            "BridgePose" -> 15
+            "CorpsePose" -> 5
+            else -> 0
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            val completedArray = data?.getStringArrayExtra("completedWorkouts") ?: arrayOf()
+            completedWorkouts.addAll(completedArray.asList())
+
+            val currentIndex = data?.getIntExtra("currentIndex", -1) ?: -1
+            val exercises = data?.getStringArrayExtra("exercises")?.toList() ?: emptyList()
+            if (currentIndex != -1) {
+                startExercise(exercises, currentIndex + 1)
+            } else {
+                checkCompletedWorkouts()
+            }
+        }
+    }
+
+
+    companion object {
+        private const val REQUEST_CODE = 1
     }
 }

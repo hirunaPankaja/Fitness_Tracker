@@ -81,4 +81,6 @@ dependencies {
     implementation(libs.play.services.maps.v1802)
     implementation(libs.play.services.location.v1800)
     implementation (libs.androidx.recyclerview.v121)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
 }

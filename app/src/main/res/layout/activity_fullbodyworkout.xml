@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LowerBodyWorkoutActivity"
+    tools:context=".fullbodyworkout_activity"
     android:background="#1E1E1E">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnStartSession">
+        android:padding="16dp">
 
         <!-- Back Button -->
         <ImageButton
@@ -29,13 +29,14 @@
             android:src="@drawable/white_arrow"
             tools:ignore="TouchTargetSizeCheck" />
 
+
         <!-- Header Section -->
         <ImageView
             android:id="@+id/headerImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/lowerbody"
+            android:src="@drawable/fullbody"
             android:contentDescription="Header Image"
             android:alpha="0.5" />
 
@@ -43,7 +44,8 @@
             android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lower Body Workouts"
+            android:fontFamily="@font/segoeuithibd"
+            android:text="Full Body Workouts"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -54,7 +56,8 @@
             android:id="@+id/workoutPlan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7 Days • 30 mins/day • Beginner Level"
+            android:text="7 Days • 45 mins/day • Beginner  Level"
+            android:fontFamily="@font/inter_semi_bold"
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             android:layout_marginTop="5dp"
@@ -64,6 +67,7 @@
         <TextView
             android:id="@+id/overviewTitle"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/inter_semi_bold"
             android:layout_height="wrap_content"
             android:text="Overview"
             android:textSize="20sp"
@@ -76,8 +80,9 @@
             android:id="@+id/overviewDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This plan is tailored to target major upper body muscles—without any equipment."
+            android:text="This full-body workout plan for fat loss combines 8 bodyweight exercises to target all major muscle groups while boosting calorie burn.These plan designed to improve endurance, build strength, and promote fat loss. Perfect for home workouts with no equipment required!"
             android:textSize="14sp"
+            android:fontFamily="@font/inter_semi_bold"
             android:textColor="#FFFFFF"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -88,6 +93,7 @@
             android:id="@+id/homeWorkoutPlanTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="Home Workout Plan"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -99,8 +105,9 @@
             android:id="@+id/homeWorkoutPlanDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This workout plan is designed for beginners and can be done at home with minimal equipment. The plan consists of 7 days of exercises with 30 minutes of workout each day."
+            android:text="This workout plan is designed for intermediates and can be done at home with minimal equipment. The plan consists of 7 days of exercises with 45 minutes of workout each day."
             android:textSize="14sp"
+            android:fontFamily="@font/inter_semi_bold"
             android:textColor="#DDDDDD"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -111,6 +118,7 @@
             android:id="@+id/exercisesTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/segoeuithibd"
             android:text="Exercises"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -124,7 +132,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Exercise 1 - Squats -->
+            <!-- Exercise 1 -  Jumping Jacks-->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -140,13 +148,14 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical|center_horizontal">
                     <ImageView
-                        android:id="@+id/imgSquats"
+                        android:id="@+id/imgJumpingJacks"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/squats"
-                        android:contentDescription="Squats Image"
+                        android:src="@drawable/jumpingjack"
+                        android:contentDescription="JumpingJacks Image"
                         android:layout_marginEnd="16dp"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:onClick="onCardClick"/>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -154,17 +163,70 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
                         <TextView
-                            android:id="@+id/btnSquats"
+                            android:id="@+id/btnJumpingJacks"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/transparent"
-                            android:text="Squats"
+                            android:text="Jumping Jacks"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:gravity="center" />
                         <TextView
-                            android:id="@+id/SquatsDetails"
+                            android:id="@+id/JumpingJacksDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" 30–45 seconds (3 sets)"
+                            android:textSize="14sp"
+                            android:textColor="#DDDDDD"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Exercise 2 - Burpees -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp"
+                android:onClick="onCardClick">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|center_horizontal">
+                    <ImageView
+                        android:id="@+id/imgBurpees"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/burpees"
+                        android:contentDescription="Burpees Image"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="center_vertical"
+                        android:onClick="onCardClick"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+                        <TextView
+                            android:id="@+id/btnBurpees"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/transparent"
+                            android:text="Burpees"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+                        <TextView
+                            android:id="@+id/BurpeesDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3 sets of 12 reps"
@@ -176,7 +238,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Exercise 2 - Lunges -->
+            <!-- Exercise 3 - Plank Jacks  -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -192,13 +254,14 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical|center_horizontal">
                     <ImageView
-                        android:id="@+id/imggluteBridges"
+                        android:id="@+id/imgPlankJacks"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/glutebridges"
-                        android:contentDescription="Glute Bridges Image"
+                        android:src="@drawable/plankjacks"
+                        android:contentDescription="Plank JacksImage"
                         android:layout_marginEnd="16dp"
                         android:layout_gravity="center_vertical" />
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -206,20 +269,20 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
                         <TextView
-                            android:id="@+id/btnGluteBridges"
+                            android:id="@+id/btnMountainClimbers"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/transparent"
-                            android:text="Glute Bridges"
+                            android:text="Plank Jacks"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:gravity="center" />
                         <TextView
-                            android:id="@+id/GluteBridgesDetails"
+                            android:id="@+id/PlankJacksDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3 sets of 10 reps"
+                            android:text="3 sets of 15 set"
                             android:textSize="14sp"
                             android:textColor="#DDDDDD"
                             android:layout_marginTop="8dp"
@@ -228,7 +291,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Exercise 3 - Pike Lunges -->
+            <!-- Exercise 4 - High Knees -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -244,11 +307,11 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical|center_horizontal">
                     <ImageView
-                        android:id="@+id/imgLunges"
+                        android:id="@+id/imgHighKnees"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/lunges"
-                        android:contentDescription="Lunges Image"
+                        android:src="@drawable/highknees"
+                        android:contentDescription="High Knees Image"
                         android:layout_marginEnd="16dp"
                         android:layout_gravity="center_vertical" />
                     <LinearLayout
@@ -258,20 +321,20 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
                         <TextView
-                            android:id="@+id/btnLunges"
+                            android:id="@+id/btnHighKnees"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/transparent"
-                            android:text="Lunges"
+                            android:text="High Knees"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:gravity="center" />
                         <TextView
-                            android:id="@+id/LungesDetails"
+                            android:id="@+id/HighKneesDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4 sets of 8 reps"
+                            android:text="3 sets of 45 sec"
                             android:textSize="14sp"
                             android:textColor="#DDDDDD"
                             android:layout_marginTop="8dp"
@@ -280,7 +343,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Exercise 4 - StepUps -->
+            <!-- Exercise 5 -  Push-Ups -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -296,11 +359,11 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical|center_horizontal">
                     <ImageView
-                        android:id="@+id/imgStepUps"
+                        android:id="@+id/imgPushUps"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/step_ups"
-                        android:contentDescription="StepUps Image"
+                        android:src="@drawable/pushup"
+                        android:contentDescription=" Push-Ups Image"
                         android:layout_marginEnd="16dp"
                         android:layout_gravity="center_vertical" />
                     <LinearLayout
@@ -310,20 +373,20 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
                         <TextView
-                            android:id="@+id/btnStepUps"
+                            android:id="@+id/btnPushUps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/transparent"
-                            android:text="Step-Ups"
+                            android:text=" Push-Ups"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:gravity="center" />
                         <TextView
-                            android:id="@+id/StepUpsDetails"
+                            android:id="@+id/PushUpsDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3 sets of 10 reps"
+                            android:text="3 sets of 12 reps"
                             android:textSize="14sp"
                             android:textColor="#DDDDDD"
                             android:layout_marginTop="8dp"
@@ -332,7 +395,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Exercise 5 - Calf Raises -->
+            <!-- Exercise 5 -  Bodyweight Squats -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -348,11 +411,11 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical|center_horizontal">
                     <ImageView
-                        android:id="@+id/imgCalfRaises"
+                        android:id="@+id/imgBodyweightSquats"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/calf_raises"
-                        android:contentDescription="Calf Raises Image"
+                        android:src="@drawable/squats"
+                        android:contentDescription="Bodyweight Squats Image"
                         android:layout_marginEnd="16dp"
                         android:layout_gravity="center_vertical" />
                     <LinearLayout
@@ -362,17 +425,17 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
                         <TextView
-                            android:id="@+id/btnCalfRaises"
+                            android:id="@+id/btnBodyweightSquats"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/transparent"
-                            android:text="Calf Raises"
+                            android:text=" Bodyweight Squats"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:gravity="center" />
                         <TextView
-                            android:id="@+id/CalfRaisesDetails"
+                            android:id="@+id/BodyweightSquatsDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3 sets of 15 reps"
@@ -383,6 +446,112 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <!-- Exercise 5 -  Plank to Shoulder Tap -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp"
+                android:onClick="onCardClick">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|center_horizontal">
+                    <ImageView
+                        android:id="@+id/imgPlanktoShoulderTap"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/plankshouldertap"
+                        android:contentDescription=" PlanktoShoulderTap Image"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+                        <TextView
+                            android:id="@+id/btnPlanktoShoulderTap"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/transparent"
+                            android:text=" Plank to Shoulder Tap"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+                        <TextView
+                            android:id="@+id/PlanktoShoulderTapDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 sets of 45 sec"
+                            android:textSize="14sp"
+                            android:textColor="#DDDDDD"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Exercise 5 -  Side Plank (Each Side) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2A2A2A"
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp"
+                android:onClick="onCardClick">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|center_horizontal">
+                    <ImageView
+                        android:id="@+id/imgSidePlank"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/sideplank"
+                        android:contentDescription=" Side Plank Image"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+                        <TextView
+                            android:id="@+id/btnSidePlank"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/transparent"
+                            android:text=" Side Plank (Each Side)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+                        <TextView
+                            android:id="@+id/SidePlankDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 sets of 30 sec"
+                            android:textSize="14sp"
+                            android:textColor="#DDDDDD"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
 

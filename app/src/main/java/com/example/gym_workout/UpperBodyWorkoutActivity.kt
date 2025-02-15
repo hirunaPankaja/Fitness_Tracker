@@ -5,15 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.content.Intent
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gym_workout.database.DatabaseHelperWorkout
 import com.example.gym_workout.databinding.UpperbodyworkoutActivityBinding
 
+@Suppress("DEPRECATION")
 class UpperBodyWorkoutActivity : AppCompatActivity() {
 
     private lateinit var dbHelper: DatabaseHelperWorkout
     private lateinit var binding: UpperbodyworkoutActivityBinding
+    private val completedWorkouts = mutableSetOf<String>() // Track completed workouts
+    private var totalCaloriesBurned = 0
+    private var totalDuration = 0 // in minutes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +37,18 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
         binding.imgTricepDips.setOnClickListener { onCardClick(it) }
 
         binding.btnStartSession.setOnClickListener { onStartWorkoutClick(it) }
-        binding.btnBack.setOnClickListener { onBackClick(it) } // Add this line for the back button
+        binding.btnBack.setOnClickListener { onBackClick(it) }
+
+        // Check for completed workouts
+        val completedArray = intent.getStringArrayExtra("completedWorkouts") ?: arrayOf()
+        completedWorkouts.addAll(completedArray.asList())
+
+        // Check completed workouts and update UI
+        checkCompletedWorkouts()
+    }
+
+    private fun onBackClick(view: View) {
+        finish()
     }
 
     private fun insertExerciseData() {
@@ -87,6 +103,43 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
         )
     }
 
+    private fun checkCompletedWorkouts() {
+        // Iterate over completed workouts and update UI
+        if (completedWorkouts.contains("PikePushUps")) {
+            binding.root.findViewById<ImageView>(R.id.imgPikePushUpsDone).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("PlankShoulderTaps")) {
+            binding.root.findViewById<ImageView>(R.id.imgPlanktoShoulderTap).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("PushUps")) {
+            binding.root.findViewById<ImageView>(R.id.imgPushUps).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("SupermanHold")) {
+            binding.root.findViewById<ImageView>(R.id.imgSupermanHold).visibility = View.VISIBLE
+        }
+        if (completedWorkouts.contains("TricepDips")) {
+            binding.root.findViewById<ImageView>(R.id.imgTricepDips).visibility = View.VISIBLE
+        }
+
+        // Check if all workouts are completed
+        if (completedWorkouts.containsAll(listOf("PikePushUps", "PlankShoulderTaps", "PushUps", "SupermanHold", "TricepDips"))) {
+            Log.d("UpperBodyWorkoutActivity", "All workouts completed. Showing popup.")
+            showCompletionPopup()
+        } else {
+            Log.d("UpperBodyWorkoutActivity", "Workouts not completed yet.")
+        }
+    }
+
+    private fun showCompletionPopup() {
+        val popupDialog = Popupworkoutcomplete(this, totalCaloriesBurned, totalDuration)
+        popupDialog.setOnDismissListener {
+            // Return to the main screen when the popup is dismissed
+            val intent = Intent(this, UpperBodyWorkoutActivity::class.java)
+            startActivity(intent)
+        }
+        popupDialog.show()
+    }
+
     fun onCardClick(view: View) {
         Log.d("UpperBodyWorkoutActivity", "Card clicked: ${view.id}")
 
@@ -113,8 +166,9 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
             intent.putExtra("title", exercise.title)
             intent.putExtra("instructions", exercise.instructions)
             intent.putExtra("repsSets", exercise.repsSets)
-            intent.putExtra("exerciseName", exercise.name) // For fetching image
-            startActivity(intent)
+            intent.putExtra("exerciseName", exercise.name)
+            intent.putExtra("completedWorkouts", completedWorkouts.toTypedArray())
+            startActivityForResult(intent, REQUEST_CODE)
         } else {
             Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
         }
@@ -123,20 +177,81 @@ class UpperBodyWorkoutActivity : AppCompatActivity() {
     fun onStartWorkoutClick(view: View) {
         Log.d("UpperBodyWorkoutActivity", "Start Workout button clicked")
         Toast.makeText(this, "Workout Started!", Toast.LENGTH_SHORT).show()
-        val exercise = dbHelper.getExercise("PikePushUps") // Get the first exercise
-        if (exercise != null) {
-            val intent = Intent(this, Workout::class.java)
-            intent.putExtra("title", exercise.title)
-            intent.putExtra("instructions", exercise.instructions)
-            intent.putExtra("repsSets", exercise.repsSets)
-            intent.putExtra("exerciseName", exercise.name) // For fetching image
-            startActivity(intent)
+
+        // Define the list of exercises for the session
+        val exercises = listOf("PikePushUps", "PlankShoulderTaps", "PushUps", "SupermanHold", "TricepDips")
+
+        // Start the first exercise
+        startExercise(exercises, 0)
+    }
+
+    private fun startExercise(exercises: List<String>, currentIndex: Int) {
+        if (currentIndex < exercises.size) {
+            val exercise = dbHelper.getExercise(exercises[currentIndex])
+            if (exercise != null) {
+                totalCaloriesBurned += getCaloriesBurned(exercise.name)
+                totalDuration += getDuration(exercise.name)
+
+                val intent = Intent(this, Workout::class.java)
+                intent.putExtra("title", exercise.title)
+                intent.putExtra("instructions", exercise.instructions)
+                intent.putExtra("repsSets", exercise.repsSets)
+                intent.putExtra("exerciseName", exercise.name)
+                intent.putExtra("exercises", exercises.toTypedArray())
+                intent.putExtra("currentIndex", currentIndex)
+                intent.putExtra("completedWorkouts", completedWorkouts.toTypedArray())
+                startActivityForResult(intent, REQUEST_CODE)
+            } else {
+                Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(this, "No such exercise found", Toast.LENGTH_SHORT).show()
+            // All workouts completed, show completion popup
+            Log.d("UpperBodyWorkoutActivity", "All exercises completed. Showing popup.")
+            showCompletionPopup()
         }
     }
 
-    fun onBackClick(view: View) {
-        finish()
+    private fun getCaloriesBurned(exerciseName: String): Int {
+        return when (exerciseName) {
+            "PikePushUps" -> 50
+            "PlankShoulderTaps" -> 40
+            "PushUps" -> 60
+            "SupermanHold" -> 30
+            "TricepDips" -> 35
+            else -> 0
+        }
+    }
+
+
+    private fun getDuration(exerciseName: String): Int {
+        return when (exerciseName) {
+            "PikePushUps" -> 10
+            "PlankShoulderTaps" -> 8
+            "PushUps" -> 12
+            "SupermanHold" -> 6
+            "TricepDips" -> 7
+            else -> 0
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            val completedArray = data?.getStringArrayExtra("completedWorkouts") ?: arrayOf()
+            completedWorkouts.addAll(completedArray.asList())
+
+            val currentIndex = data?.getIntExtra("currentIndex", -1) ?: -1
+            val exercises = data?.getStringArrayExtra("exercises")?.toList() ?: emptyList()
+
+            if (currentIndex != -1) {
+                startExercise(exercises, currentIndex + 1)
+            } else {
+                checkCompletedWorkouts()
+            }
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE = 1
     }
 }

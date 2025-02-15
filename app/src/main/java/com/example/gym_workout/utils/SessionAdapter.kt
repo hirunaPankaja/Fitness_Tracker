@@ -11,6 +11,7 @@ import com.example.gym_workout.LowerBodyWorkoutActivity
 import com.example.gym_workout.R
 import com.example.gym_workout.UpperBodyWorkoutActivity
 import com.example.gym_workout.YogaActivity
+import com.example.gym_workout.fullbodyworkout_activity
 
 class SessionAdapter(private val sessionItems: MutableList<SessionItem>) :
     RecyclerView.Adapter<SessionAdapter.SessionViewHolder>() {
@@ -60,7 +61,10 @@ class SessionAdapter(private val sessionItems: MutableList<SessionItem>) :
                         val intent = Intent(itemView.context, YogaActivity::class.java)
                         itemView.context.startActivity(intent)
                     }
-                    
+                    "Full Body" -> {
+                        val intent = Intent(itemView.context, fullbodyworkout_activity::class.java)
+                        itemView.context.startActivity(intent)
+                    }
                 }
             }
         }
