@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="CHOOSE YOUR PREFERRED DIET PLAN"
+        android:text="@string/choose_your_preferred_diet_plan"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textAlignment="center"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="12dp"
-            android:text="Vegetarian"
+            android:text="@string/vegetarian"
             android:textColor="#FFFFFF"
             android:buttonTint="#FFFFFF"
             android:background="#2E2D2D"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="12dp"
-            android:text="Vegan"
+            android:text="@string/non_vegetarian"
             android:textColor="#FFFFFF"
             android:buttonTint="#FFFFFF"
             android:background="#2E2D2D"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="12dp"
-            android:text="Keto"
+            android:text="@string/vegan"
             android:textColor="#FFFFFF"
             android:buttonTint="#FFFFFF"
             android:background="#2E2D2D"
@@ -95,18 +95,6 @@
             android:textSize="16sp" />
 
         <!-- Other Option -->
-        <RadioButton
-            android:id="@+id/radioOther"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="12dp"
-            android:text="Other"
-            android:textColor="#FFFFFF"
-            android:buttonTint="#FFFFFF"
-            android:background="#2E2D2D"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="16sp" />
     </RadioGroup>
 
     <!-- Space to push the button to the bottom -->

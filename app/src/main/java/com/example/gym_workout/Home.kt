@@ -1,6 +1,7 @@
 package com.example.gym_workout
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class Home : Fragment() {
     private lateinit var cyclingLayout: LinearLayout
     private lateinit var workoutLayout: LinearLayout
     private lateinit var footstepsCountsTextView: TextView
+    private lateinit var caloriesCountsTextView: TextView
     private lateinit var databaseHelper: DatabaseHelper2
 
     override fun onCreateView(
@@ -37,13 +39,16 @@ class Home : Fragment() {
         // Initialize DatabaseHelper
         databaseHelper = DatabaseHelper2(requireContext())
 
-        // Initialize TextView
         footstepsCountsTextView = view.findViewById(R.id.Footsteps_counts)
+        caloriesCountsTextView = view.findViewById(R.id.calories_value)
 
-        // Get current date steps count and set to TextView
+
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val stepsCount = getStepsCountForDate(currentDate)
-        footstepsCountsTextView.text = stepsCount.toString()
+        val (stepsCount, calories) = getStepsAndCalories(currentDate)
+
+
+        caloriesCountsTextView.text = "$calories kcal"
+        footstepsCountsTextView.text = "$stepsCount steps"
 
         // Initialize RecyclerView
         sessionRecyclerView = view.findViewById(R.id.session_viewer)
@@ -86,10 +91,14 @@ class Home : Fragment() {
         return view
     }
 
-    private fun getStepsCountForDate(date: String): Int {
-        return databaseHelper.getStepsCountForDate(date)
+    private fun getStepsAndCalories(date: String): Pair<Int, Int> {
+        return try {
+            databaseHelper.getStepsAndCaloriesForDate(date)
+        } catch (e: Exception) {
+            Log.e("Activity", "Error fetching steps and calories: ${e.message}")
+            Pair(0, 0)
+        }
     }
-
     private fun updateRecyclerView(sessionItems: List<SessionItem>) {
         sessionAdapter.updateData(sessionItems)
     }

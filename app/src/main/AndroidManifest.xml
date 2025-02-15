@@ -7,7 +7,6 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -38,6 +37,9 @@
         android:theme="@style/Theme.GYM_Workout"
         tools:replace="android:allowBackup, android:label"
         tools:targetApi="31">
+        <activity
+            android:name=".MealDetailsOverlayActivity"
+            android:exported="false" />
         <activity
             android:name=".JogMapWalkingActivity"
             android:exported="false" />
@@ -94,9 +96,7 @@
         <activity
             android:name=".LoadingScreen"
             android:exported="false" />
-        <activity
-            android:name=".registrationSteps.VerifyEmail"
-            android:exported="false" />
+
         <activity
             android:name=".SetPassword"
             android:exported="false" />
@@ -137,36 +137,30 @@
             android:name=".Workout"
             android:exported="true" />
         <activity
-            android:name=".UpperBodyWorkoutActivity"
-            android:exported="true"/>
-            android:exported="true" />
-
-        <activity
             android:name=".step1"
             android:exported="true" />
         <activity
             android:name=".Setting"
             android:exported="true" />
 
+        <!-- Add the LauncherActivity to handle navigation -->
         <activity
-            android:name=".MainActivity1"
-            android:exported="true" />
-        <activity
-            android:name=".step1"
+            android:name=".utils.LauncherActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity1"
+            android:exported="true" />
+
         <receiver
             android:name=".ActivityRecognitionReceiver"
             android:exported="false" />
-
-        <!-- Add the service for location and step counting-->
         <service
             android:name=".LocationAndStepService"
             android:enabled="true"
@@ -174,17 +168,15 @@
             android:foregroundServiceType="location"
             android:permission="TODO"
             tools:ignore="ExportedService" />
-
-
-        <!-- Add the broadcast receiver for boot completed-->
         <receiver
             android:name=".RestartServiceReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

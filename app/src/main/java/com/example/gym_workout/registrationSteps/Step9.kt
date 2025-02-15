@@ -7,6 +7,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.gym_workout.MainActivity1
 import com.example.gym_workout.R
 import com.example.gym_workout.database.DatabaseHelper
 import com.example.gym_workout.utils.NavigationHelper
@@ -36,7 +37,7 @@ class Step9 : AppCompatActivity() {
 
                 val isSaved = dbHelper.saveOrUpdateStepData(data, "user1")
                 if (isSaved) {
-                    NavigationHelper.navigateToNextStep(this, VerifyEmail::class.java)
+                    NavigationHelper.navigateToNextStep(this, MainActivity1::class.java)
                 } else {
                     Toast.makeText(this, "Error saving data.", Toast.LENGTH_SHORT).show()
                 }

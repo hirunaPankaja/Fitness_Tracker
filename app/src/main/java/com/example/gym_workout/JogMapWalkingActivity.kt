@@ -6,6 +6,7 @@ import android.location.Location
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.example.gym_workout.database.DataManager
+import com.example.gym_workout.database.DatabaseHelper2
 import com.google.android.gms.maps.model.PolylineOptions
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -40,16 +43,23 @@ class JogMapWalkingActivity : AppCompatActivity(), OnMapReadyCallback {
     private var lastLocation: LatLng? = null
     private lateinit var dataManager: DataManager
     private var userWeight: Float? = null
+    private lateinit var dbHelper: DatabaseHelper2
+    private var currentCalories = 0.0
+    private lateinit var today: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.jog_map_walking)
-
+        today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         txtTime = findViewById(R.id.txtTime)
         txtDistance = findViewById(R.id.txtDistance)
         txtCalories = findViewById(R.id.txtCalories)
         btnStart = findViewById(R.id.btnStart)
+        dbHelper = DatabaseHelper2(this)
 
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val (_, existingCalories) = dbHelper.getStepsAndCaloriesForDate(today)
+        currentCalories = existingCalories.toDouble()
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
@@ -148,15 +158,36 @@ class JogMapWalkingActivity : AppCompatActivity(), OnMapReadyCallback {
         btnStart.text = "START"
         timerHandler.removeCallbacks(runTimer)
         fusedLocationClient.removeLocationUpdates(locationCallback)
+
+        // Calculate calories burned
+        val caloriesBurned = userWeight?.let { weight -> 0.75 * weight * totalDistance } ?: 0.0
+
+        // Calculate total calories
+        val totalCalories = currentCalories + caloriesBurned
+
+        // Save to database
+        saveCaloriesToDatabase(today, totalCalories.toInt())
     }
 
     private val runTimer = object : Runnable {
         override fun run() {
             val elapsed = (System.currentTimeMillis() - startTime) / 1000
             txtTime.text = String.format(Locale.getDefault(), "Time: %02d:%02d:%02d", elapsed / 3600, (elapsed % 3600) / 60, elapsed % 60)
+
+            // Calculate calories burned
             val caloriesBurned = userWeight?.let { weight -> 0.75 * weight * totalDistance } ?: 0.0
             txtCalories.text = String.format(Locale.getDefault(), "Calories: %.1f kcal", caloriesBurned)
+
+            // Schedule the next update
             timerHandler.postDelayed(this, 1000)
+        }
+    }
+
+    private fun saveCaloriesToDatabase(date: String, totalCalories: Int) {
+        try {
+            dbHelper.saveCalories(date, totalCalories)
+        } catch (e: Exception) {
+            Log.e("JogMap", "Error saving calories: ${e.message}")
         }
     }
 
